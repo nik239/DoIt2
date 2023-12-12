@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21513" systemVersion="22C65" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22222" systemVersion="23A344" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="ToDoItem" representedClassName="ToDoItem" syncable="YES">
         <attribute name="isComplete" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="taskDescription" attributeType="String"/>
@@ -7,6 +7,6 @@
     </entity>
     <entity name="ToDoItemList" representedClassName="ToDoItemList" syncable="YES">
         <attribute name="title" optional="YES" attributeType="String"/>
-        <relationship name="toDos" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="ToDoItem" inverseName="list" inverseEntity="ToDoItem"/>
+        <relationship name="toDos" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="ToDoItem" inverseName="list" inverseEntity="ToDoItem"/>
     </entity>
 </model>
