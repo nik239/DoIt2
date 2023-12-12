@@ -64,7 +64,7 @@ extension ToDosViewController {
   }
   
   override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-    let completeAction = UIContextualAction(style: .normal, title: "Done!") { //why weak self here?
+    let completeAction = UIContextualAction(style: .normal, title: "Done!") { 
       [weak self] (action, view, completionHandler) in
       if indexPath.section == Section.finished.rawValue {
         completionHandler(false)

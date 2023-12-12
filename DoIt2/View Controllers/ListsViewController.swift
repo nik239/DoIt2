@@ -68,26 +68,28 @@ extension ListsViewController {
     self.navigationController?.pushViewController(ToDosViewController(style: .plain, currentList: toDoList), animated: true)
   }
   
-  override func setEditing(_ editing: Bool, animated: Bool) {
-      super.setEditing(editing, animated: true)
-      tableView.setEditing(editing, animated: true)
-  }
-  
-  override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath){
-    print("firing EditingStyle!")
-    if editingStyle == .delete {
-      print("firing delete!")
+  override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+    let completeAction = UIContextualAction(style: .normal, title: "Delete") {
+      [weak self] (action, view, completionHandler) in
       let request = ToDoItemList.fetchRequest()
       do {
+        guard let listToDelete = self?.dataSource.itemIdentifier(for: indexPath) else {
+          print("Could not find the underlying ToDoList!")
+          return
+        }
         let results = try PersistenceController.shared.container.viewContext.fetch(request)
-        print(results)
         let objectToDelete = results[indexPath.row] as ToDoItemList
         PersistenceController.shared.container.viewContext.delete(objectToDelete)
         PersistenceController.safeContextSave()
-        updateDataSource()
+        self?.updateDataSource()
       } catch {
         print("Failed to fetch ToDoItemList!")
       }
+      completionHandler(true)
     }
+    
+    completeAction.backgroundColor = .systemRed
+    let configuration = UISwipeActionsConfiguration(actions: [completeAction])
+    return configuration
   }
 }
