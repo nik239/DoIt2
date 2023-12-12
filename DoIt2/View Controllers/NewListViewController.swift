@@ -1,0 +1,64 @@
+//
+//  NewListViewController.swift
+//  DoIt
+//
+//  Created by Nikita Ivanov on 11/06/2023.
+//
+
+import UIKit
+
+final class NewListViewController: UIViewController {
+    lazy var fldTitle: UITextField = {
+        let fld = UITextField(frame: .zero)
+        fld.textAlignment = .left
+        fld.textColor = .white
+        fld.placeholder = "List title..."
+    
+        return fld
+    }()
+    
+    lazy var lblTitle: UILabel = {
+        let lbl = UILabel(frame: .zero)
+        lbl.textAlignment = .center
+        lbl.font = UIFont.systemFont(ofSize: 20)
+        lbl.text = "List title:"
+        
+        return lbl
+    }()
+    
+    lazy var svTitle: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [lblTitle, fldTitle])
+        stackView.alignment = .center
+        stackView.axis = .horizontal
+        stackView.distribution = .fillEqually
+        view.addSubview(stackView)
+        
+        return stackView
+    }()
+    
+    lazy var btnSave: UIButton = {
+        let btn = UIButton(type: .system) // Creates a standard system button (blue text, no background)
+        btn.setTitle("Save", for: .normal)
+        btn.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
+        return btn
+    }()
+    
+    @objc func saveButtonTapped() {
+        ToDoItemList.createWith(title: fldTitle.text ?? "no name")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.addSubview(svTitle)
+        view.addSubview(btnSave)
+        fldTitle.delegate = self
+        setupConstraints()
+    }
+}
+
+extension NewListViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+}
