@@ -75,20 +75,13 @@ extension ListsViewController {
   override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
     let completeAction = UIContextualAction(style: .normal, title: "Delete") {
       [weak self] (action, view, completionHandler) in
-      let request = ToDoItemList.fetchRequest()
-      do {
-        guard let listToDelete = self?.dataSource.itemIdentifier(for: indexPath) else {
-          print("Could not find the underlying ToDoList!")
-          return
-        }
-        let results = try PersistenceController.shared.container.viewContext.fetch(request)
-        let objectToDelete = results[indexPath.row] as ToDoItemList
-        PersistenceController.shared.container.viewContext.delete(objectToDelete)
-        PersistenceController.safeContextSave()
-        self?.updateDataSource()
-      } catch {
-        print("Failed to fetch ToDoItemList!")
+      guard let listToDelete = self?.dataSource.itemIdentifier(for: indexPath) else {
+        print("Couldn't get ToDoList from dataSource!")
+        return
       }
+      PersistenceController.shared.container.viewContext.delete(listToDelete)
+      PersistenceController.safeContextSave()
+      self?.updateDataSource()
       completionHandler(true)
     }
     completeAction.backgroundColor = .systemRed

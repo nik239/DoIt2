@@ -32,16 +32,13 @@ final class TaskListDataSource: UITableViewDiffableDataSource<ToDoSection, ToDoI
   
   override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath){
     if editingStyle == .delete {
-      let request = (indexPath.section == 0) ? ToDoItem.activeToDosFetchRequest(list: currentList) : ToDoItem.finishedToDosFetchRequest(list: currentList)
-      do {
-        let results = try PersistenceController.shared.container.viewContext.fetch(request)
-        let objectToDelete = results[indexPath.row] as ToDoItem
-        PersistenceController.shared.container.viewContext.delete(objectToDelete)
-        PersistenceController.safeContextSave()
-        update()
-      } catch {
-        print("Failed to fetch ToDos!")
+      guard let itemToDelete = self.itemIdentifier(for: indexPath) else {
+        print("Couldn't get toDoItem from dataSource!")
+        return
       }
+      PersistenceController.shared.container.viewContext.delete(itemToDelete)
+      PersistenceController.safeContextSave()
+      update()
     }
   }
   
