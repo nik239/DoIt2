@@ -33,7 +33,7 @@ final class ListCell: UITableViewCell {
 extension ListCell {
   func setupConstraints() {
     lblDescription.snp.makeConstraints{ make in
-      make.leading.trailing.equalToSuperview().labeled("list-cell horizontal")
+      make.leading.trailing.equalToSuperview().inset(15).labeled("list-cell horizontal")
       make.top.bottom.equalToSuperview().inset(10).labeled("list-cell vertical")
     }
   }

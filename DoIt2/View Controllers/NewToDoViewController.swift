@@ -10,6 +10,7 @@ import SnapKit
 
 final class NewToDoViewController: UIViewController {
   let currentList: ToDoItemList
+  let updateListViewController: () -> ()
   
   init(currentList: ToDoItemList){
     self.currentList = currentList
@@ -55,12 +56,13 @@ final class NewToDoViewController: UIViewController {
     return btn
   }()
   
+  // should present a notification that an item was added
   @objc func saveButtonTapped() {
     guard let text = fldDescription.text else {
       return
     }
     ToDoItem.createWith(taskDescription: text, list: currentList)
-    navigationController?.popViewController(animated: true)
+    fldDescription.text = ""
   }
   
   override func viewDidLoad() {

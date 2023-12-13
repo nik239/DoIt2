@@ -8,7 +8,7 @@
 import UIKit
 import CoreData
 
-enum Section: Int, CaseIterable {
+enum ToDoSection: Int, CaseIterable {
   case active
   case finished
 }
@@ -41,8 +41,8 @@ extension ToDosViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     navigationItem.rightBarButtonItems = [editButtonItem, addButton]
-    tableView.register(ToDoItemCell.self, forCellReuseIdentifier: "\(ToDoItemCell.self)\(Section.active.rawValue)")
-    tableView.register(CompletedToDoItemCell.self, forCellReuseIdentifier: "\(ToDoItemCell.self)\(Section.finished.rawValue)")
+    tableView.register(ToDoItemCell.self, forCellReuseIdentifier: "\(ToDoItemCell.self)\(ToDoSection.active.rawValue)")
+    tableView.register(CompletedToDoItemCell.self, forCellReuseIdentifier: "\(ToDoItemCell.self)\(ToDoSection.finished.rawValue)")
     configureDataSource()
   }
   override func viewIsAppearing(_ animated: Bool) {
@@ -64,9 +64,9 @@ extension ToDosViewController {
   }
   
   override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-    let completeAction = UIContextualAction(style: .normal, title: "Done!") { 
+    let completeAction = UIContextualAction(style: .normal, title: "Done!") {
       [weak self] (action, view, completionHandler) in
-      if indexPath.section == Section.finished.rawValue {
+      if indexPath.section == ToDoSection.finished.rawValue {
         completionHandler(false)
         return
       }

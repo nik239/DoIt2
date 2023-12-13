@@ -8,6 +8,10 @@
 import UIKit
 import CoreData
 
+enum Section: CaseIterable {
+  case one
+}
+
 final class ListsViewController: UITableViewController, UIViewControllerTransitioningDelegate {
   private var dataSource: UITableViewDiffableDataSource<Section, ToDoItemList>!
 
@@ -39,7 +43,7 @@ extension ListsViewController {
   }
 }
 
-//MARK: TableView methods
+//MARK: TableView code
 extension ListsViewController {
   func configureDataSource() {
     dataSource = UITableViewDiffableDataSource(tableView: tableView) {
@@ -56,7 +60,7 @@ extension ListsViewController {
     newSnapshot.appendSections(Section.allCases)
     let request = ToDoItemList.fetchRequest()
     let results = try! PersistenceController.shared.container.viewContext.fetch(request)
-    newSnapshot.appendItems(results, toSection: .active)
+    newSnapshot.appendItems(results, toSection: .one)
     dataSource.apply(newSnapshot, animatingDifferences: true)
   }
   
@@ -87,7 +91,6 @@ extension ListsViewController {
       }
       completionHandler(true)
     }
-    
     completeAction.backgroundColor = .systemRed
     let configuration = UISwipeActionsConfiguration(actions: [completeAction])
     return configuration

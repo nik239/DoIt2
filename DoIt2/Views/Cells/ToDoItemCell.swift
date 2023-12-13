@@ -33,9 +33,8 @@ class ToDoItemCell: UITableViewCell {
 extension ToDoItemCell {
   func setupConstraints() {
     lblDescription.snp.makeConstraints{ make in
-      make.leading.trailing.equalToSuperview().labeled("label-cell horizontal")
-      make.top.bottom.equalToSuperview().inset(10).labeled("label-cell vertical")
+      make.leading.trailing.equalToSuperview().inset(15).labeled("label-cell horizontal")
+      make.top.bottom.equalToSuperview().inset(15).labeled("label-cell vertical")
     }
-    
   }
 }

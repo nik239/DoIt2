@@ -10,68 +10,83 @@ import SnapKit
 
 final class NewListViewController: UIViewController {
   let updateListViewController: () -> ()
+  
   init(update: @escaping () -> ()){
     self.updateListViewController = update
     super.init(nibName: nil, bundle: nil)
   }
+  
   required init?(coder: NSCoder) {
     fatalError("init(coder:) isn't implemented")
   }
-  lazy var fldTitle: UITextField = {
-    let fld = UITextField(frame: .zero)
-    fld.textAlignment = .left
-    fld.textColor = .white
-    fld.placeholder = "List title..."
-    
-    return fld
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    setupUI()
+  }
+
+  //MARK: UI
+  
+  private func setupUI() {
+    view.backgroundColor = .systemGray2
+    view.addSubview(lblInstructions)
+    view.addSubview(svTitle)
+    fldTitle.delegate = self
+    setupConstraints()
+  }
+  
+  lazy var lblInstructions: UILabel = {
+    let lbl = UILabel(frame: .zero)
+    lbl.numberOfLines = 0
+    lbl.text = """
+    To create a new list enter a title and press return.
+    To cancel swipe down.
+    """
+    lbl.font = UIFont.preferredFont(forTextStyle: .footnote)
+    lbl.textColor = .systemGray6
+    return lbl
   }()
   
   lazy var lblTitle: UILabel = {
     let lbl = UILabel(frame: .zero)
     lbl.textAlignment = .center
     lbl.font = UIFont.systemFont(ofSize: 20)
-    lbl.text = "List title:"
-    
+    lbl.text = "Title:"
+    lbl.textColor = .systemGray6
     return lbl
+  }()
+  
+  lazy var fldTitle: UITextField = {
+    let fld = UITextField(frame: .zero)
+    fld.textAlignment = .left
+    fld.textColor = traitCollection.userInterfaceStyle == .dark ? .white : .black
+    fld.borderStyle = .roundedRect
+    fld.backgroundColor = .systemGray6
+    fld.placeholder = "Enter list title"
+    return fld
   }()
   
   lazy var svTitle: UIStackView = {
     let stackView = UIStackView(arrangedSubviews: [lblTitle, fldTitle])
     stackView.alignment = .center
     stackView.axis = .horizontal
-    stackView.distribution = .fillEqually
+    stackView.distribution = .fillProportionally
     view.addSubview(stackView)
     
     return stackView
   }()
-  
-  lazy var btnSave: UIButton = {
-    let btn = UIButton(type: .system) // Creates a standard system button (blue text, no background)
-    btn.setTitle("Save", for: .normal)
-    btn.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
-    return btn
-  }()
-  
-  @objc func saveButtonTapped() {
-    guard let text = fldTitle.text else {
-      return
-    }
-    ToDoItemList.createWith(title: text)
-    updateListViewController()
-  }
-  
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    view.addSubview(svTitle)
-    view.addSubview(btnSave)
-    fldTitle.delegate = self
-    setupConstraints()
-  }
 }
 
 extension NewListViewController: UITextFieldDelegate {
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    guard let text = fldTitle.text, text != "" else {
+      textField.resignFirstResponder()
+      return true
+    }
+    ToDoItemList.createWith(title: text)
+    updateListViewController()
     textField.resignFirstResponder()
+    self.dismiss(animated: true)
     return true
   }
 }
@@ -79,18 +94,17 @@ extension NewListViewController: UITextFieldDelegate {
 //MARK: SnapKit Constraints
 extension NewListViewController {
   func setupConstraints() {
-    lblTitle.snp.makeConstraints{ make in
-      make.left.equalToSuperview().labeled("NewListViewController lblTitle.left")
+    lblInstructions.snp.makeConstraints { make in
+      make.top.equalToSuperview().inset(30)
+      make.centerX.equalToSuperview()
+    }
+    lblTitle.snp.makeConstraints { make in
+      make.width.equalTo(60).labeled("NewListViewController lblTitle.width")
     }
     svTitle.snp.makeConstraints{ make in
+      make.width.equalToSuperview().multipliedBy(0.95).labeled("NewListViewController svTitle.width")
       make.centerX.equalToSuperview().labeled("NewListViewController svTitle.centerX")
       make.centerY.equalToSuperview().labeled("NewListViewController svTitle.cetnerY")
-      //make.height.equalTo(20)
-      make.width.equalToSuperview().multipliedBy(0.95).labeled("NewListViewController svTitle.width")
-    }
-    btnSave.snp.makeConstraints{ make in
-      make.centerX.equalToSuperview().labeled("NewListViewController btnSave.centerX")
-      make.bottom.equalToSuperview().inset(20).labeled("NewListViewController btnSave.bottom")
     }
   }
 }
