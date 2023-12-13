@@ -13,7 +13,7 @@ enum ToDoSection: Int, CaseIterable {
   case finished
 }
 
-final class ToDosViewController: UITableViewController {
+final class ToDosViewController: UITableViewController, UIViewControllerTransitioningDelegate {
   private var dataSource: TaskListDataSource!
   var currentList: ToDoItemList
   
@@ -32,7 +32,10 @@ final class ToDosViewController: UITableViewController {
   }()
   
   @objc func addButtonTapped() {
-    self.navigationController?.pushViewController(NewToDoViewController(currentList: currentList), animated: false)
+    let newToDoViewController = NewToDoViewController(currentList: currentList, update: dataSource.update)
+    newToDoViewController.modalPresentationStyle = UIModalPresentationStyle.pageSheet
+    newToDoViewController.transitioningDelegate = self
+    present(newToDoViewController, animated: true, completion: nil)
   }
 }
 

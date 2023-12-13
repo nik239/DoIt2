@@ -12,8 +12,9 @@ final class NewToDoViewController: UIViewController {
   let currentList: ToDoItemList
   let updateListViewController: () -> ()
   
-  init(currentList: ToDoItemList){
+  init(currentList: ToDoItemList, update: @escaping () -> ()){
     self.currentList = currentList
+    self.updateListViewController = update
     super.init(nibName: nil, bundle: nil)
   }
   
@@ -21,61 +22,95 @@ final class NewToDoViewController: UIViewController {
     fatalError("init(coder:) isn't implemented")
   }
   
-  lazy var fldDescription: UITextField = {
-    let fld = UITextField(frame: .zero)
-    fld.textAlignment = .left
-    fld.textColor = .white
-    fld.placeholder = "Description"
-    
-    return fld
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    setupUI()
+  }
+  
+  private func setupUI() {
+    view.backgroundColor = .systemGray2
+    view.addSubview(lblInstructions)
+    view.addSubview(svItemAdded)
+    view.addSubview(svTitle)
+    fldTitle.delegate = self
+    setupConstraints()
+  }
+  
+  lazy var imgItemAdded: UIImageView = {
+    let img = UIImage(systemName: "checkmark.circle.fill")!
+    img.withTintColor(.green)
+    let imgView = UIImageView(image: img)
+    return imgView
   }()
   
-  lazy var lblToDo: UILabel = {
+  lazy var lblItemAdded: UILabel = {
     let lbl = UILabel(frame: .zero)
-    lbl.textAlignment = .center
+    lbl.text = "New to-do was created!"
     lbl.font = UIFont.systemFont(ofSize: 20)
-    lbl.text = "New to-do:"
-    
+    lbl.textColor = .black
     return lbl
   }()
   
-  lazy var svDescription: UIStackView = {
-    let stackView = UIStackView(arrangedSubviews: [lblToDo, fldDescription])
+  lazy var svItemAdded: UIStackView = {
+    let stackView = UIStackView(arrangedSubviews: [imgItemAdded, lblItemAdded])
     stackView.alignment = .center
     stackView.axis = .horizontal
-    stackView.distribution = .fillEqually
-    
-    //view.addSubview(stackView)
+    stackView.distribution = .fillProportionally
+    stackView.backgroundColor = .white
     
     return stackView
   }()
   
-  lazy var saveButton: UIBarButtonItem = {
-    //do this setup in View Model
-    let btn = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(saveButtonTapped))
-    return btn
+  lazy var lblInstructions: UILabel = {
+    let lbl = UILabel(frame: .zero)
+    lbl.numberOfLines = 0
+    lbl.text = """
+    To create a new to-do enter a title and press return.
+    To cancel swipe down.
+    """
+    lbl.font = UIFont.preferredFont(forTextStyle: .footnote)
+    lbl.textColor = .systemGray6
+    return lbl
   }()
   
-  // should present a notification that an item was added
-  @objc func saveButtonTapped() {
-    guard let text = fldDescription.text else {
-      return
-    }
-    ToDoItem.createWith(taskDescription: text, list: currentList)
-    fldDescription.text = ""
-  }
+  lazy var lblTitle: UILabel = {
+    let lbl = UILabel(frame: .zero)
+    lbl.textAlignment = .center
+    lbl.font = UIFont.systemFont(ofSize: 20)
+    lbl.text = "Name:"
+    lbl.textColor = .systemGray6
+    return lbl
+  }()
   
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    view.addSubview(svDescription)
-    navigationItem.rightBarButtonItem = saveButton
-    fldDescription.delegate = self
-    setupConstraints()
-  }
+  lazy var fldTitle: UITextField = {
+    let fld = UITextField(frame: .zero)
+    fld.textAlignment = .left
+    fld.textColor = traitCollection.userInterfaceStyle == .dark ? .white : .black
+    fld.borderStyle = .roundedRect
+    fld.backgroundColor = .systemGray6
+    fld.placeholder = "Enter to-do description"
+    return fld
+  }()
+  
+  lazy var svTitle: UIStackView = {
+    let stackView = UIStackView(arrangedSubviews: [lblTitle, fldTitle])
+    stackView.alignment = .center
+    stackView.axis = .horizontal
+    stackView.distribution = .fillProportionally
+    view.addSubview(stackView)
+    
+    return stackView
+  }()
+  
 }
 
 extension NewToDoViewController: UITextFieldDelegate {
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    if let text = fldTitle.text, text != "" {
+      ToDoItem.createWith(taskDescription: text, list: currentList)
+      fldTitle.text = ""
+      updateListViewController()
+    }
     textField.resignFirstResponder()
     return true
   }
@@ -84,14 +119,29 @@ extension NewToDoViewController: UITextFieldDelegate {
 //MARK: SnapKit Constraints
 extension NewToDoViewController {
   func setupConstraints() {
-    lblToDo.snp.makeConstraints{ make in
-      make.left.equalToSuperview().labeled("NewToDoViewController lblToDo.left")
+    lblInstructions.snp.makeConstraints { make in
+      make.top.equalToSuperview().inset(30)
+      make.centerX.equalToSuperview()
     }
-    svDescription.snp.makeConstraints{ make in
-      make.centerX.equalToSuperview().labeled("NewToDoViewController svDescritpiton.centerX")
-      make.centerY.equalToSuperview().labeled("NewToDoViewController scDesctiption.cetnerY")
-      //make.height.equalTo(20)
-      make.width.equalToSuperview().multipliedBy(0.95).labeled("NewToDoViewController svDescription.width")
+    imgItemAdded.snp.makeConstraints { make in
+      make.width.equalTo(20)
+      make.height.equalTo(20)
+    }
+    lblItemAdded.snp.makeConstraints { make in
+  //    make.centerX.equalToSuperview()
+    }
+    svItemAdded.snp.makeConstraints{ make in
+      make.top.equalToSuperview().inset(30)
+      make.centerX.equalToSuperview()
+      make.width.equalToSuperview().multipliedBy(0.85)
+    }
+    lblTitle.snp.makeConstraints { make in
+      make.width.equalTo(60).labeled("NewToDoViewController lblTitle.width")
+    }
+    svTitle.snp.makeConstraints{ make in
+      make.width.equalToSuperview().multipliedBy(0.95).labeled("NewToDoViewController svTitle.width")
+      make.centerX.equalToSuperview().labeled("NewToDoViewController svTitle.centerX")
+      make.centerY.equalToSuperview().labeled("NewToDoViewController svTitle.cetnerY")
     }
   }
 }
