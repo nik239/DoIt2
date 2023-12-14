@@ -9,23 +9,10 @@ import UIKit
 import SnapKit
 
 final class NewListViewController: UIViewController {
-  let updateListViewController: () -> ()
-  
-  init(update: @escaping () -> ()){
-    self.updateListViewController = update
-    super.init(nibName: nil, bundle: nil)
-  }
-  
-  required init?(coder: NSCoder) {
-    fatalError("init(coder:) isn't implemented")
-  }
-  
   override func viewDidLoad() {
     super.viewDidLoad()
     setupUI()
   }
-
-  //MARK: UI
   
   private func setupUI() {
     view.backgroundColor = .systemGray2
@@ -83,8 +70,8 @@ extension NewListViewController: UITextFieldDelegate {
       textField.resignFirstResponder()
       return true
     }
+    print("creating new list!")
     ToDoItemList.createWith(title: text)
-    updateListViewController()
     textField.resignFirstResponder()
     self.dismiss(animated: true)
     return true

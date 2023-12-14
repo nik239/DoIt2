@@ -37,7 +37,7 @@ final class TaskListDataSource: UITableViewDiffableDataSource<ToDoSection, ToDoI
         return
       }
       PersistenceController.shared.container.viewContext.delete(itemToDelete)
-      PersistenceController.safeContextSave()
+      PersistenceController.shared.saveContext()
       update()
     }
   }

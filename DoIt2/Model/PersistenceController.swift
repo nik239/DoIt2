@@ -1,0 +1,36 @@
+//
+//  Persistence.swift
+//  DoIt
+//
+//  Created by Nikita Ivanov on 14/05/2023.
+//
+
+import CoreData
+
+struct PersistenceController {
+  static let shared = PersistenceController()
+  
+  let container: NSPersistentContainer
+  
+  var context: NSManagedObjectContext {
+    container.viewContext
+  }
+  
+  init() {
+    container = NSPersistentContainer(name: "DoIt")
+    container.loadPersistentStores { _, error in
+      if let error = error as NSError? {
+        fatalError("Unresolved error \(error), \(error.userInfo)")
+      }
+    }
+  }
+
+  func saveContext(){
+    guard context.hasChanges else { return }
+    do {
+      try context.save()
+    } catch let error as NSError {
+      print("Unresolved error \(error), \(error.userInfo)")
+    }
+  }
+}

@@ -31,12 +31,18 @@ extension ToDoItem {
     return request
   }
   
+  @NSManaged public var priority: Int16
+  @NSManaged public var creationDate: Date
   @NSManaged public var taskDescription: String
   @NSManaged public var isComplete: Bool
   @NSManaged public var list: ToDoItemList
   
-  static func createWith(taskDescription: String, isComplete: Bool = false, list: ToDoItemList) {
+  static func createWith(taskDescription: String,
+                         isComplete: Bool = false,
+                         list: ToDoItemList, priority: Int16 = 0) {
     let ToDo = ToDoItem(context: PersistenceController.shared.container.viewContext)
+    ToDo.creationDate = .now
+    ToDo.priority = priority 
     ToDo.taskDescription = taskDescription
     ToDo.isComplete = isComplete
     ToDo.list = list

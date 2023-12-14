@@ -15,7 +15,7 @@
 		A8614F7E2B27CDA400DCC068 /* ToDoItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8614F532B27CDA300DCC068 /* ToDoItemCell.swift */; };
 		A8614F822B27CDA400DCC068 /* ToDoItemList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8614F592B27CDA300DCC068 /* ToDoItemList+CoreDataProperties.swift */; };
 		A8614F832B27CDA400DCC068 /* ToDoItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8614F5A2B27CDA300DCC068 /* ToDoItem+CoreDataClass.swift */; };
-		A8614F842B27CDA400DCC068 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8614F5B2B27CDA300DCC068 /* Persistence.swift */; };
+		A8614F842B27CDA400DCC068 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8614F5B2B27CDA300DCC068 /* PersistenceController.swift */; };
 		A8614F852B27CDA400DCC068 /* ToDoItemList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8614F5C2B27CDA300DCC068 /* ToDoItemList+CoreDataClass.swift */; };
 		A8614F862B27CDA400DCC068 /* ToDoItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8614F5D2B27CDA300DCC068 /* ToDoItem+CoreDataProperties.swift */; };
 		A8614F882B27CDA400DCC068 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8614F5F2B27CDA300DCC068 /* AppDelegate.swift */; };
@@ -38,7 +38,7 @@
 		A8614F532B27CDA300DCC068 /* ToDoItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToDoItemCell.swift; sourceTree = "<group>"; };
 		A8614F592B27CDA300DCC068 /* ToDoItemList+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ToDoItemList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		A8614F5A2B27CDA300DCC068 /* ToDoItem+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ToDoItem+CoreDataClass.swift"; sourceTree = "<group>"; };
-		A8614F5B2B27CDA300DCC068 /* Persistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		A8614F5B2B27CDA300DCC068 /* PersistenceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		A8614F5C2B27CDA300DCC068 /* ToDoItemList+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ToDoItemList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		A8614F5D2B27CDA300DCC068 /* ToDoItem+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ToDoItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		A8614F5F2B27CDA300DCC068 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -119,9 +119,9 @@
 			isa = PBXGroup;
 			children = (
 				A8614F482B27CDA300DCC068 /* DoIt.xcdatamodeld */,
+				A8614F5B2B27CDA300DCC068 /* PersistenceController.swift */,
 				A8614F592B27CDA300DCC068 /* ToDoItemList+CoreDataProperties.swift */,
 				A8614F5A2B27CDA300DCC068 /* ToDoItem+CoreDataClass.swift */,
-				A8614F5B2B27CDA300DCC068 /* Persistence.swift */,
 				A8614F5C2B27CDA300DCC068 /* ToDoItemList+CoreDataClass.swift */,
 				A8614F5D2B27CDA300DCC068 /* ToDoItem+CoreDataProperties.swift */,
 			);
@@ -236,7 +236,7 @@
 				A8614F9C2B27CEDE00DCC068 /* SceneDelegate.swift in Sources */,
 				A8614F832B27CDA400DCC068 /* ToDoItem+CoreDataClass.swift in Sources */,
 				A8614F972B27CDA400DCC068 /* ToDosViewModel.swift in Sources */,
-				A8614F842B27CDA400DCC068 /* Persistence.swift in Sources */,
+				A8614F842B27CDA400DCC068 /* PersistenceController.swift in Sources */,
 				A8614F7D2B27CDA400DCC068 /* ListCell.swift in Sources */,
 				A8614F822B27CDA400DCC068 /* ToDoItemList+CoreDataProperties.swift in Sources */,
 				A8614F942B27CDA400DCC068 /* NewListViewController.swift in Sources */,

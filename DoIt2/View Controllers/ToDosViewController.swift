@@ -97,7 +97,7 @@ extension ToDosViewController {
     }
     dataSource?.update()
     ToDoItem.createWith(taskDescription: taskDescription, isComplete: true, list: currentList)
-    PersistenceController.safeContextSave()
+    PersistenceController.shared.saveContext()
     dataSource?.update()
   }
 }

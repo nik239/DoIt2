@@ -8,84 +8,104 @@
 import UIKit
 import CoreData
 
-enum Section: CaseIterable {
-  case one
-}
-
 final class ListsViewController: UITableViewController, UIViewControllerTransitioningDelegate {
-  private var dataSource: UITableViewDiffableDataSource<Section, ToDoItemList>!
-
-  private lazy var addButton: UIBarButtonItem = {
-    let btn = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
-    return btn
-  }()
+  private var dataSource: UITableViewDiffableDataSource<String, NSManagedObjectID>!
   
+  lazy var fetchedResultsController:
+  NSFetchedResultsController<ToDoItemList> = {
+    let fetchRequest = ToDoItemList.fetchRequest()
+    let dateSort = NSSortDescriptor(key: #keyPath(ToDoItemList.creationDate), ascending: true)
+    fetchRequest.sortDescriptors = [dateSort]
+    let fetchedResultsController = NSFetchedResultsController(
+      fetchRequest: fetchRequest,
+      managedObjectContext: PersistenceController.shared.context,
+      sectionNameKeyPath: nil,
+      cacheName: nil)
+    fetchedResultsController.delegate = self
+    return fetchedResultsController
+  }()
+
   @objc func addButtonTapped() {
-    let newListViewController = NewListViewController(update: updateDataSource)
+    let newListViewController = NewListViewController()
     newListViewController.modalPresentationStyle = UIModalPresentationStyle.pageSheet
     newListViewController.transitioningDelegate = self
     present(newListViewController, animated: true, completion: nil)
   }
+  
+  private lazy var addButton: UIBarButtonItem = {
+    let btn = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
+    return btn
+  }()
 }
 
-//MARK: Lifecycle methods
+//MARK: Life Cycle
 extension ListsViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     navigationItem.rightBarButtonItems = [editButtonItem, addButton]
     tableView.register(ListCell.self, forCellReuseIdentifier: "\(ListCell.self)")
-    configureDataSource()
+    dataSource = configureDataSource()
   }
   
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
-    updateDataSource()
+    UIView.performWithoutAnimation {
+      do {
+        try fetchedResultsController.performFetch()
+      } catch let error as NSError {
+        print("Fetching error: \(error), \(error.userInfo)")
+      }
+    }
   }
 }
 
-//MARK: TableView code
+//MARK: TableView 
 extension ListsViewController {
-  func configureDataSource() {
-    dataSource = UITableViewDiffableDataSource(tableView: tableView) {
-      tableView, indexPath, toDoList -> UITableViewCell? in
-      guard let cell = tableView.dequeueReusableCell(withIdentifier:"\(ListCell.self)", for: indexPath) as? ListCell
-      else { fatalError("Could not create ListCell") }
-      cell.lblDescription.text = toDoList.title
+  func configureDataSource() -> UITableViewDiffableDataSource<String, NSManagedObjectID> {
+    UITableViewDiffableDataSource(tableView: tableView) {
+      tableView, indexPath, managedObjectID -> UITableViewCell? in
+      let cell = tableView.dequeueReusableCell(
+        withIdentifier:"\(ListCell.self)",
+        for: indexPath) as! ListCell
+      if let list = try?
+          PersistenceController.shared.context.existingObject(with: managedObjectID)
+          as? ToDoItemList {
+        cell.lblDescription.text = list.title
+      }
       return cell
     }
   }
   
-  func updateDataSource() {
-    var newSnapshot = NSDiffableDataSourceSnapshot<Section, ToDoItemList>()
-    newSnapshot.appendSections(Section.allCases)
-    let request = ToDoItemList.fetchRequest()
-    let results = try! PersistenceController.shared.container.viewContext.fetch(request)
-    newSnapshot.appendItems(results, toSection: .one)
-    dataSource.apply(newSnapshot, animatingDifferences: true)
-  }
-  
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    guard let toDoList = dataSource.itemIdentifier(for: indexPath) else {
-      print("Could not find the underlieing ToDoList!")
-      return
-    }
-    self.navigationController?.pushViewController(ToDosViewController(style: .plain, currentList: toDoList), animated: true)
+    let list = fetchedResultsController.object(at: indexPath)
+    self.navigationController?.pushViewController(ToDosViewController(style: .plain, currentList: list), animated: true)
   }
   
   override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
     let completeAction = UIContextualAction(style: .normal, title: "Delete") {
       [weak self] (action, view, completionHandler) in
-      guard let listToDelete = self?.dataSource.itemIdentifier(for: indexPath) else {
+      guard let listToDelete = self?.fetchedResultsController.object(at: indexPath) else {
         print("Couldn't get ToDoList from dataSource!")
         return
       }
       PersistenceController.shared.container.viewContext.delete(listToDelete)
-      PersistenceController.safeContextSave()
-      self?.updateDataSource()
+      PersistenceController.shared.saveContext()
       completionHandler(true)
     }
     completeAction.backgroundColor = .systemRed
     let configuration = UISwipeActionsConfiguration(actions: [completeAction])
     return configuration
+  }
+}
+
+// MARK: - FetchedResultsControllerDelegate
+extension ListsViewController: NSFetchedResultsControllerDelegate {
+  func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+                  didChangeContentWith
+                  snapshot: NSDiffableDataSourceSnapshotReference) {
+    print("Data changed!")
+    let snapshot = snapshot
+    as NSDiffableDataSourceSnapshot<String, NSManagedObjectID>
+    dataSource?.apply(snapshot)
   }
 }

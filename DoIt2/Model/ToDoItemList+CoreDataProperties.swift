@@ -17,16 +17,13 @@ extension ToDoItemList {
   
   @NSManaged public var title: String?
   @NSManaged public var toDos: [ToDoItem]
+  @NSManaged public var creationDate: Date
   
   static func createWith(title: String) {
-    let newToDoItemList = ToDoItemList(context: PersistenceController.shared.container.viewContext)
-    newToDoItemList.title = title
-    do {
-      try PersistenceController.shared.container.viewContext.save()
-    } catch {
-      let nserror = error as NSError
-      fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-    }
+    let list = ToDoItemList(context: PersistenceController.shared.context)
+    list.title = title
+    list.creationDate = .now
+    PersistenceController.shared.saveContext()
   }
 }
 
