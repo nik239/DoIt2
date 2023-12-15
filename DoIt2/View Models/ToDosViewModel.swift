@@ -42,12 +42,16 @@ final class TaskListDataSource: UITableViewDiffableDataSource<ToDoSection, ToDoI
     }
   }
   
-  //    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-  //        guard sourceIndexPath.section == destinationIndexPath.section,
-  //              let toDoToMove = itemIdentifier(for: sourceIndexPath),
-  //              let toDoAtDestination = itemIdentifier(for: destinationIndexPath) else {
-  //            return }
-  //    update()
-  //    }
+  override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+    guard sourceIndexPath.section == destinationIndexPath.section,
+          let toDoToMove = itemIdentifier(for: sourceIndexPath),
+          let toDoAtDestination = itemIdentifier(for: destinationIndexPath) else {
+      return }
+    update()
+  }
+  
+  override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+    return true
+  }
 }
 

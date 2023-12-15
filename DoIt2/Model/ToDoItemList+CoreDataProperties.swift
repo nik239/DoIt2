@@ -18,11 +18,13 @@ extension ToDoItemList {
   @NSManaged public var title: String?
   @NSManaged public var toDos: [ToDoItem]
   @NSManaged public var creationDate: Date
+  @NSManaged public var customSort: Int16
   
   static func createWith(title: String) {
     let list = ToDoItemList(context: PersistenceController.shared.context)
     list.title = title
     list.creationDate = .now
+    list.customSort = 0
     PersistenceController.shared.saveContext()
   }
 }

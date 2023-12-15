@@ -9,13 +9,14 @@ import UIKit
 import CoreData
 
 final class ListsViewController: UITableViewController, UIViewControllerTransitioningDelegate {
-  private var dataSource: UITableViewDiffableDataSource<String, NSManagedObjectID>!
+  private var dataSource: ListsControllerDataSource!
   
   lazy var fetchedResultsController:
   NSFetchedResultsController<ToDoItemList> = {
     let fetchRequest = ToDoItemList.fetchRequest()
-    let dateSort = NSSortDescriptor(key: #keyPath(ToDoItemList.creationDate), ascending: true)
-    fetchRequest.sortDescriptors = [dateSort]
+    let dateSort = NSSortDescriptor(key: #keyPath(ToDoItemList.creationDate), ascending: false)
+    let customSort = NSSortDescriptor(key: #keyPath(ToDoItemList.customSort), ascending: true)
+    fetchRequest.sortDescriptors = [customSort, dateSort]
     let fetchedResultsController = NSFetchedResultsController(
       fetchRequest: fetchRequest,
       managedObjectContext: PersistenceController.shared.context,
@@ -45,6 +46,7 @@ extension ListsViewController {
     navigationItem.rightBarButtonItems = [editButtonItem, addButton]
     tableView.register(ListCell.self, forCellReuseIdentifier: "\(ListCell.self)")
     dataSource = configureDataSource()
+    tableView.delegate = self
   }
   
   override func viewDidAppear(_ animated: Bool) {
@@ -61,8 +63,8 @@ extension ListsViewController {
 
 //MARK: TableView 
 extension ListsViewController {
-  func configureDataSource() -> UITableViewDiffableDataSource<String, NSManagedObjectID> {
-    UITableViewDiffableDataSource(tableView: tableView) {
+  func configureDataSource() -> ListsControllerDataSource {
+    ListsControllerDataSource(tableView: tableView) {
       tableView, indexPath, managedObjectID -> UITableViewCell? in
       let cell = tableView.dequeueReusableCell(
         withIdentifier:"\(ListCell.self)",
@@ -103,7 +105,6 @@ extension ListsViewController: NSFetchedResultsControllerDelegate {
   func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
                   didChangeContentWith
                   snapshot: NSDiffableDataSourceSnapshotReference) {
-    print("Data changed!")
     let snapshot = snapshot
     as NSDiffableDataSourceSnapshot<String, NSManagedObjectID>
     dataSource?.apply(snapshot)

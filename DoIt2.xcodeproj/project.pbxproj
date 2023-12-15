@@ -26,6 +26,8 @@
 		A8614F972B27CDA400DCC068 /* ToDosViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8614F702B27CDA400DCC068 /* ToDosViewModel.swift */; };
 		A8614F982B27CDA400DCC068 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A8614F712B27CDA400DCC068 /* LaunchScreen.storyboard */; };
 		A8614F9C2B27CEDE00DCC068 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8614F9B2B27CEDE00DCC068 /* SceneDelegate.swift */; };
+		A8A1C90E2B2CF90400E08322 /* PersistenceDiffableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A1C90D2B2CF90400E08322 /* PersistenceDiffableDataSource.swift */; };
+		A8F338E52B2BA1E000B18EB9 /* ListsControllerDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F338E42B2BA1E000B18EB9 /* ListsControllerDataSource.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +52,8 @@
 		A8614F712B27CDA400DCC068 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A8614F9B2B27CEDE00DCC068 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		A8614F9E2B27D6A600DCC068 /* DoIt2-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DoIt2-Bridging-Header.h"; sourceTree = "<group>"; };
+		A8A1C90D2B2CF90400E08322 /* PersistenceDiffableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceDiffableDataSource.swift; sourceTree = "<group>"; };
+		A8F338E42B2BA1E000B18EB9 /* ListsControllerDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListsControllerDataSource.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +147,8 @@
 			isa = PBXGroup;
 			children = (
 				A8614F702B27CDA400DCC068 /* ToDosViewModel.swift */,
+				A8F338E42B2BA1E000B18EB9 /* ListsControllerDataSource.swift */,
+				A8A1C90D2B2CF90400E08322 /* PersistenceDiffableDataSource.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -233,9 +239,11 @@
 				A8614F762B27CDA400DCC068 /* DoIt.xcdatamodeld in Sources */,
 				A8614F7C2B27CDA400DCC068 /* CompletedToDoItemCell.swift in Sources */,
 				A8614F912B27CDA400DCC068 /* ToDosViewController.swift in Sources */,
+				A8F338E52B2BA1E000B18EB9 /* ListsControllerDataSource.swift in Sources */,
 				A8614F9C2B27CEDE00DCC068 /* SceneDelegate.swift in Sources */,
 				A8614F832B27CDA400DCC068 /* ToDoItem+CoreDataClass.swift in Sources */,
 				A8614F972B27CDA400DCC068 /* ToDosViewModel.swift in Sources */,
+				A8A1C90E2B2CF90400E08322 /* PersistenceDiffableDataSource.swift in Sources */,
 				A8614F842B27CDA400DCC068 /* PersistenceController.swift in Sources */,
 				A8614F7D2B27CDA400DCC068 /* ListCell.swift in Sources */,
 				A8614F822B27CDA400DCC068 /* ToDoItemList+CoreDataProperties.swift in Sources */,

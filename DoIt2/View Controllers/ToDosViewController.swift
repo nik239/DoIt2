@@ -62,6 +62,7 @@ extension ToDosViewController {
       guard let cell = tableView.dequeueReusableCell(withIdentifier:"\(ToDoItemCell.self)\(indexPath.section)", for: indexPath) as? ToDoItemCell
       else { fatalError("Could not create TaskCell") }
       cell.lblDescription.text = task.taskDescription
+      cell.showsReorderControl
       return cell
     }
   }

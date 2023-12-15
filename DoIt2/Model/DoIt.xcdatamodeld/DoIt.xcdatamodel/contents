@@ -9,6 +9,7 @@
     </entity>
     <entity name="ToDoItemList" representedClassName="ToDoItemList" syncable="YES">
         <attribute name="creationDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="customSort" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="title" optional="YES" attributeType="String"/>
         <relationship name="toDos" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="ToDoItem" inverseName="list" inverseEntity="ToDoItem"/>
     </entity>
