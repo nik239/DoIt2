@@ -10,7 +10,6 @@ import Foundation
 import CoreData
 
 extension ToDoItemList {
-  
   @nonobjc public class func fetchRequest() -> NSFetchRequest<ToDoItemList> {
     return NSFetchRequest<ToDoItemList>(entityName: "ToDoItemList")
   }
@@ -18,13 +17,14 @@ extension ToDoItemList {
   @NSManaged public var title: String?
   @NSManaged public var toDos: [ToDoItem]
   @NSManaged public var creationDate: Date
-  @NSManaged public var customSort: Int16
+  @NSManaged public var sortOrder: Int16
+  @NSManaged public var sortItemsBy: String
   
   static func createWith(title: String) {
     let list = ToDoItemList(context: PersistenceController.shared.context)
     list.title = title
     list.creationDate = .now
-    list.customSort = 0
+    list.sortOrder = 0
     PersistenceController.shared.saveContext()
   }
 }

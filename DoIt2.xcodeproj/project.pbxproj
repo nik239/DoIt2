@@ -26,8 +26,10 @@
 		A8614F972B27CDA400DCC068 /* ToDosViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8614F702B27CDA400DCC068 /* ToDosViewModel.swift */; };
 		A8614F982B27CDA400DCC068 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A8614F712B27CDA400DCC068 /* LaunchScreen.storyboard */; };
 		A8614F9C2B27CEDE00DCC068 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8614F9B2B27CEDE00DCC068 /* SceneDelegate.swift */; };
-		A8A1C90E2B2CF90400E08322 /* PersistenceDiffableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A1C90D2B2CF90400E08322 /* PersistenceDiffableDataSource.swift */; };
-		A8F338E52B2BA1E000B18EB9 /* ListsControllerDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F338E42B2BA1E000B18EB9 /* ListsControllerDataSource.swift */; };
+		A8A1C90E2B2CF90400E08322 /* PersistedDiffableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A1C90D2B2CF90400E08322 /* PersistedDiffableDataSource.swift */; };
+		A8A1C9142B2D3EE500E08322 /* SortPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A1C9132B2D3EE500E08322 /* SortPreferences.swift */; };
+		A8A1C9162B2E638E00E08322 /* ListTitlePresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A1C9152B2E638E00E08322 /* ListTitlePresentationController.swift */; };
+		A8F338E52B2BA1E000B18EB9 /* ListsViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F338E42B2BA1E000B18EB9 /* ListsViewDataSource.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,8 +54,10 @@
 		A8614F712B27CDA400DCC068 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A8614F9B2B27CEDE00DCC068 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		A8614F9E2B27D6A600DCC068 /* DoIt2-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DoIt2-Bridging-Header.h"; sourceTree = "<group>"; };
-		A8A1C90D2B2CF90400E08322 /* PersistenceDiffableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceDiffableDataSource.swift; sourceTree = "<group>"; };
-		A8F338E42B2BA1E000B18EB9 /* ListsControllerDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListsControllerDataSource.swift; sourceTree = "<group>"; };
+		A8A1C90D2B2CF90400E08322 /* PersistedDiffableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistedDiffableDataSource.swift; sourceTree = "<group>"; };
+		A8A1C9132B2D3EE500E08322 /* SortPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortPreferences.swift; sourceTree = "<group>"; };
+		A8A1C9152B2E638E00E08322 /* ListTitlePresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTitlePresentationController.swift; sourceTree = "<group>"; };
+		A8F338E42B2BA1E000B18EB9 /* ListsViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListsViewDataSource.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +108,7 @@
 		A8614F4F2B27CDA300DCC068 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A8A1C9172B2E639F00E08322 /* PresentationControllers */,
 				A8614F502B27CDA300DCC068 /* Cells */,
 			);
 			path = Views;
@@ -124,9 +129,9 @@
 			children = (
 				A8614F482B27CDA300DCC068 /* DoIt.xcdatamodeld */,
 				A8614F5B2B27CDA300DCC068 /* PersistenceController.swift */,
+				A8614F5C2B27CDA300DCC068 /* ToDoItemList+CoreDataClass.swift */,
 				A8614F592B27CDA300DCC068 /* ToDoItemList+CoreDataProperties.swift */,
 				A8614F5A2B27CDA300DCC068 /* ToDoItem+CoreDataClass.swift */,
-				A8614F5C2B27CDA300DCC068 /* ToDoItemList+CoreDataClass.swift */,
 				A8614F5D2B27CDA300DCC068 /* ToDoItem+CoreDataProperties.swift */,
 			);
 			path = Model;
@@ -147,10 +152,19 @@
 			isa = PBXGroup;
 			children = (
 				A8614F702B27CDA400DCC068 /* ToDosViewModel.swift */,
-				A8F338E42B2BA1E000B18EB9 /* ListsControllerDataSource.swift */,
-				A8A1C90D2B2CF90400E08322 /* PersistenceDiffableDataSource.swift */,
+				A8A1C90D2B2CF90400E08322 /* PersistedDiffableDataSource.swift */,
+				A8F338E42B2BA1E000B18EB9 /* ListsViewDataSource.swift */,
+				A8A1C9132B2D3EE500E08322 /* SortPreferences.swift */,
 			);
 			path = "View Models";
+			sourceTree = "<group>";
+		};
+		A8A1C9172B2E639F00E08322 /* PresentationControllers */ = {
+			isa = PBXGroup;
+			children = (
+				A8A1C9152B2E638E00E08322 /* ListTitlePresentationController.swift */,
+			);
+			path = PresentationControllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -238,12 +252,14 @@
 				A8614F862B27CDA400DCC068 /* ToDoItem+CoreDataProperties.swift in Sources */,
 				A8614F762B27CDA400DCC068 /* DoIt.xcdatamodeld in Sources */,
 				A8614F7C2B27CDA400DCC068 /* CompletedToDoItemCell.swift in Sources */,
+				A8A1C9142B2D3EE500E08322 /* SortPreferences.swift in Sources */,
 				A8614F912B27CDA400DCC068 /* ToDosViewController.swift in Sources */,
-				A8F338E52B2BA1E000B18EB9 /* ListsControllerDataSource.swift in Sources */,
+				A8F338E52B2BA1E000B18EB9 /* ListsViewDataSource.swift in Sources */,
 				A8614F9C2B27CEDE00DCC068 /* SceneDelegate.swift in Sources */,
 				A8614F832B27CDA400DCC068 /* ToDoItem+CoreDataClass.swift in Sources */,
 				A8614F972B27CDA400DCC068 /* ToDosViewModel.swift in Sources */,
-				A8A1C90E2B2CF90400E08322 /* PersistenceDiffableDataSource.swift in Sources */,
+				A8A1C9162B2E638E00E08322 /* ListTitlePresentationController.swift in Sources */,
+				A8A1C90E2B2CF90400E08322 /* PersistedDiffableDataSource.swift in Sources */,
 				A8614F842B27CDA400DCC068 /* PersistenceController.swift in Sources */,
 				A8614F7D2B27CDA400DCC068 /* ListCell.swift in Sources */,
 				A8614F822B27CDA400DCC068 /* ToDoItemList+CoreDataProperties.swift in Sources */,

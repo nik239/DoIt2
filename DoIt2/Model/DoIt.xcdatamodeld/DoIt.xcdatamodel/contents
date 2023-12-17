@@ -4,12 +4,14 @@
         <attribute name="creationDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="isComplete" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="priority" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="sortOrder" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="taskDescription" attributeType="String"/>
         <relationship name="list" maxCount="1" deletionRule="Nullify" destinationEntity="ToDoItemList" inverseName="toDos" inverseEntity="ToDoItemList"/>
     </entity>
     <entity name="ToDoItemList" representedClassName="ToDoItemList" syncable="YES">
         <attribute name="creationDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="customSort" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="sortItemsBy" optional="YES" attributeType="String"/>
+        <attribute name="sortOrder" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="title" optional="YES" attributeType="String"/>
         <relationship name="toDos" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="ToDoItem" inverseName="list" inverseEntity="ToDoItem"/>
     </entity>

@@ -9,51 +9,80 @@ import UIKit
 import CoreData
 
 final class ListsViewController: UITableViewController, UIViewControllerTransitioningDelegate {
-  private var dataSource: ListsControllerDataSource!
+  private var dataSource: ListsViewDataSource!
+  private var sortSelection = ListsSortPreference()
   
-  lazy var fetchedResultsController:
-  NSFetchedResultsController<ToDoItemList> = {
-    let fetchRequest = ToDoItemList.fetchRequest()
-    let dateSort = NSSortDescriptor(key: #keyPath(ToDoItemList.creationDate), ascending: false)
-    let customSort = NSSortDescriptor(key: #keyPath(ToDoItemList.customSort), ascending: true)
-    fetchRequest.sortDescriptors = [customSort, dateSort]
-    let fetchedResultsController = NSFetchedResultsController(
-      fetchRequest: fetchRequest,
-      managedObjectContext: PersistenceController.shared.context,
-      sectionNameKeyPath: nil,
-      cacheName: nil)
-    fetchedResultsController.delegate = self
-    return fetchedResultsController
+  //MARK: UI
+  private func setupUI() {
+    navigationItem.rightBarButtonItems = [editButtonItem, btnNewList]
+    navigationItem.leftBarButtonItem = btnSort
+  }
+  
+  private lazy var pkrSort: UIPickerView = {
+    let pkr = UIPickerView()
+    pkr.dataSource = self
+    pkr.delegate = self
+    return pkr
   }()
-
-  @objc func addButtonTapped() {
+  
+  private lazy var btnSort: UIBarButtonItem = {
+    let btn = UIBarButtonItem(title: "Sort", style: .plain, target: self, action: #selector(presentSortSelector))
+    return btn
+  }()
+                              
+  @objc func presentSortSelector() {present(alrtSelectSort, animated: true)}
+  
+  private lazy var alrtSelectSort: UIAlertController = {
+    let alrt = UIAlertController(
+      title: "Sort by:",
+      message: nil,
+      preferredStyle: .alert)
+    alrt.addTextField { fld in
+      fld.placeholder = self.sortSelection.current.rawValue
+      fld.borderStyle = .roundedRect
+      fld.inputView = self.pkrSort
+      fld.textAlignment = .center
+      fld.font = UIFont.boldSystemFont(ofSize: 20)
+      fld.tintColor = .clear
+    }
+    let sortAction = UIAlertAction(
+      title: "Apply",
+      style: .default
+    ) {[unowned self] _ in
+      self.dataSource.sort()
+    }
+    alrt.addAction(sortAction)
+    alrt.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+    return alrt
+  }()
+  
+  private lazy var btnNewList: UIBarButtonItem = {
+    let btn = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(createNewList))
+    return btn
+  }()
+  
+  @objc func createNewList() {
     let newListViewController = NewListViewController()
     newListViewController.modalPresentationStyle = UIModalPresentationStyle.pageSheet
+    newListViewController.preferredContentSize = CGSize(width: 600, height: 300)
     newListViewController.transitioningDelegate = self
     present(newListViewController, animated: true, completion: nil)
   }
-  
-  private lazy var addButton: UIBarButtonItem = {
-    let btn = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
-    return btn
-  }()
 }
 
 //MARK: Life Cycle
 extension ListsViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
-    navigationItem.rightBarButtonItems = [editButtonItem, addButton]
-    tableView.register(ListCell.self, forCellReuseIdentifier: "\(ListCell.self)")
-    dataSource = configureDataSource()
-    tableView.delegate = self
+    setupUI()
+    setupTableView()
   }
   
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     UIView.performWithoutAnimation {
       do {
-        try fetchedResultsController.performFetch()
+        try dataSource.fetchedResultsController.performFetch()
       } catch let error as NSError {
         print("Fetching error: \(error), \(error.userInfo)")
       }
@@ -63,8 +92,14 @@ extension ListsViewController {
 
 //MARK: TableView 
 extension ListsViewController {
-  func configureDataSource() -> ListsControllerDataSource {
-    ListsControllerDataSource(tableView: tableView) {
+  func setupTableView() {
+    tableView.register(ListCell.self, forCellReuseIdentifier: "\(ListCell.self)")
+    dataSource = configureDataSource()
+    tableView.delegate = self
+  }
+  
+  func configureDataSource() -> ListsViewDataSource {
+    ListsViewDataSource(tableView: tableView) {
       tableView, indexPath, managedObjectID -> UITableViewCell? in
       let cell = tableView.dequeueReusableCell(
         withIdentifier:"\(ListCell.self)",
@@ -79,34 +114,30 @@ extension ListsViewController {
   }
   
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    let list = fetchedResultsController.object(at: indexPath)
+    let list = dataSource.fetchedResultsController.object(at: indexPath)
     self.navigationController?.pushViewController(ToDosViewController(style: .plain, currentList: list), animated: true)
-  }
-  
-  override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-    let completeAction = UIContextualAction(style: .normal, title: "Delete") {
-      [weak self] (action, view, completionHandler) in
-      guard let listToDelete = self?.fetchedResultsController.object(at: indexPath) else {
-        print("Couldn't get ToDoList from dataSource!")
-        return
-      }
-      PersistenceController.shared.container.viewContext.delete(listToDelete)
-      PersistenceController.shared.saveContext()
-      completionHandler(true)
-    }
-    completeAction.backgroundColor = .systemRed
-    let configuration = UISwipeActionsConfiguration(actions: [completeAction])
-    return configuration
   }
 }
 
-// MARK: - FetchedResultsControllerDelegate
-extension ListsViewController: NSFetchedResultsControllerDelegate {
-  func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
-                  didChangeContentWith
-                  snapshot: NSDiffableDataSourceSnapshotReference) {
-    let snapshot = snapshot
-    as NSDiffableDataSourceSnapshot<String, NSManagedObjectID>
-    dataSource?.apply(snapshot)
+//MARK: PickerView
+extension ListsViewController: UIPickerViewDataSource, UIPickerViewDelegate {
+  func numberOfComponents(in pickerView: UIPickerView) -> Int {
+      return 1
+  }
+
+  func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    return ListsSorts.allCases.count
+  }
+
+  func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    return ListsSorts.allCases[row].rawValue
+  }
+  
+  func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    let newVal = ListsSorts.allCases[row].rawValue
+    sortSelection.current = ListsSorts(rawValue: newVal)!
+    self.alrtSelectSort.textFields?.first?.placeholder = newVal
   }
 }
+
+
