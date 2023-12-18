@@ -36,6 +36,7 @@ extension ToDoItem {
   @NSManaged public var taskDescription: String
   @NSManaged public var isComplete: Bool
   @NSManaged public var list: ToDoItemList
+  @NSManaged public var sortOrder: Int16
   
   static func createWith(taskDescription: String,
                          isComplete: Bool = false,
@@ -46,6 +47,7 @@ extension ToDoItem {
     ToDo.taskDescription = taskDescription
     ToDo.isComplete = isComplete
     ToDo.list = list
+    ToDo.sortOrder = 0
     do {
       try PersistenceController.shared.container.viewContext.save()
     } catch {

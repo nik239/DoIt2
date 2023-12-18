@@ -23,12 +23,11 @@
 		A8614F932B27CDA400DCC068 /* NewToDoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8614F6B2B27CDA300DCC068 /* NewToDoViewController.swift */; };
 		A8614F942B27CDA400DCC068 /* NewListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8614F6C2B27CDA300DCC068 /* NewListViewController.swift */; };
 		A8614F952B27CDA400DCC068 /* ListsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8614F6D2B27CDA300DCC068 /* ListsViewController.swift */; };
-		A8614F972B27CDA400DCC068 /* ToDosViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8614F702B27CDA400DCC068 /* ToDosViewModel.swift */; };
+		A8614F972B27CDA400DCC068 /* ToDosViewDataSourcel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8614F702B27CDA400DCC068 /* ToDosViewDataSourcel.swift */; };
 		A8614F982B27CDA400DCC068 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A8614F712B27CDA400DCC068 /* LaunchScreen.storyboard */; };
 		A8614F9C2B27CEDE00DCC068 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8614F9B2B27CEDE00DCC068 /* SceneDelegate.swift */; };
 		A8A1C90E2B2CF90400E08322 /* PersistedDiffableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A1C90D2B2CF90400E08322 /* PersistedDiffableDataSource.swift */; };
 		A8A1C9142B2D3EE500E08322 /* SortPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A1C9132B2D3EE500E08322 /* SortPreferences.swift */; };
-		A8A1C9162B2E638E00E08322 /* ListTitlePresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A1C9152B2E638E00E08322 /* ListTitlePresentationController.swift */; };
 		A8F338E52B2BA1E000B18EB9 /* ListsViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F338E42B2BA1E000B18EB9 /* ListsViewDataSource.swift */; };
 /* End PBXBuildFile section */
 
@@ -50,13 +49,12 @@
 		A8614F6B2B27CDA300DCC068 /* NewToDoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewToDoViewController.swift; sourceTree = "<group>"; };
 		A8614F6C2B27CDA300DCC068 /* NewListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewListViewController.swift; sourceTree = "<group>"; };
 		A8614F6D2B27CDA300DCC068 /* ListsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListsViewController.swift; sourceTree = "<group>"; };
-		A8614F702B27CDA400DCC068 /* ToDosViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToDosViewModel.swift; sourceTree = "<group>"; };
+		A8614F702B27CDA400DCC068 /* ToDosViewDataSourcel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToDosViewDataSourcel.swift; sourceTree = "<group>"; };
 		A8614F712B27CDA400DCC068 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A8614F9B2B27CEDE00DCC068 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		A8614F9E2B27D6A600DCC068 /* DoIt2-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DoIt2-Bridging-Header.h"; sourceTree = "<group>"; };
 		A8A1C90D2B2CF90400E08322 /* PersistedDiffableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistedDiffableDataSource.swift; sourceTree = "<group>"; };
 		A8A1C9132B2D3EE500E08322 /* SortPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortPreferences.swift; sourceTree = "<group>"; };
-		A8A1C9152B2E638E00E08322 /* ListTitlePresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTitlePresentationController.swift; sourceTree = "<group>"; };
 		A8F338E42B2BA1E000B18EB9 /* ListsViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListsViewDataSource.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -91,7 +89,7 @@
 		A8614F2D2B27CCF700DCC068 /* DoIt2 */ = {
 			isa = PBXGroup;
 			children = (
-				A8614F582B27CDA300DCC068 /* Model */,
+				A8614F582B27CDA300DCC068 /* Persistence */,
 				A8614F4F2B27CDA300DCC068 /* Views */,
 				A8614F6F2B27CDA400DCC068 /* View Models */,
 				A8614F682B27CDA300DCC068 /* View Controllers */,
@@ -108,7 +106,6 @@
 		A8614F4F2B27CDA300DCC068 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				A8A1C9172B2E639F00E08322 /* PresentationControllers */,
 				A8614F502B27CDA300DCC068 /* Cells */,
 			);
 			path = Views;
@@ -124,7 +121,7 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		A8614F582B27CDA300DCC068 /* Model */ = {
+		A8614F582B27CDA300DCC068 /* Persistence */ = {
 			isa = PBXGroup;
 			children = (
 				A8614F482B27CDA300DCC068 /* DoIt.xcdatamodeld */,
@@ -134,7 +131,7 @@
 				A8614F5A2B27CDA300DCC068 /* ToDoItem+CoreDataClass.swift */,
 				A8614F5D2B27CDA300DCC068 /* ToDoItem+CoreDataProperties.swift */,
 			);
-			path = Model;
+			path = Persistence;
 			sourceTree = "<group>";
 		};
 		A8614F682B27CDA300DCC068 /* View Controllers */ = {
@@ -151,20 +148,12 @@
 		A8614F6F2B27CDA400DCC068 /* View Models */ = {
 			isa = PBXGroup;
 			children = (
-				A8614F702B27CDA400DCC068 /* ToDosViewModel.swift */,
+				A8614F702B27CDA400DCC068 /* ToDosViewDataSourcel.swift */,
 				A8A1C90D2B2CF90400E08322 /* PersistedDiffableDataSource.swift */,
 				A8F338E42B2BA1E000B18EB9 /* ListsViewDataSource.swift */,
 				A8A1C9132B2D3EE500E08322 /* SortPreferences.swift */,
 			);
 			path = "View Models";
-			sourceTree = "<group>";
-		};
-		A8A1C9172B2E639F00E08322 /* PresentationControllers */ = {
-			isa = PBXGroup;
-			children = (
-				A8A1C9152B2E638E00E08322 /* ListTitlePresentationController.swift */,
-			);
-			path = PresentationControllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -257,8 +246,7 @@
 				A8F338E52B2BA1E000B18EB9 /* ListsViewDataSource.swift in Sources */,
 				A8614F9C2B27CEDE00DCC068 /* SceneDelegate.swift in Sources */,
 				A8614F832B27CDA400DCC068 /* ToDoItem+CoreDataClass.swift in Sources */,
-				A8614F972B27CDA400DCC068 /* ToDosViewModel.swift in Sources */,
-				A8A1C9162B2E638E00E08322 /* ListTitlePresentationController.swift in Sources */,
+				A8614F972B27CDA400DCC068 /* ToDosViewDataSourcel.swift in Sources */,
 				A8A1C90E2B2CF90400E08322 /* PersistedDiffableDataSource.swift in Sources */,
 				A8614F842B27CDA400DCC068 /* PersistenceController.swift in Sources */,
 				A8614F7D2B27CDA400DCC068 /* ListCell.swift in Sources */,

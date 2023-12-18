@@ -10,11 +10,9 @@ import SnapKit
 
 final class NewToDoViewController: UIViewController {
   let currentList: ToDoItemList
-  let updateListViewController: () -> ()
   
-  init(currentList: ToDoItemList, update: @escaping () -> ()){
+  init(currentList: ToDoItemList){
     self.currentList = currentList
-    self.updateListViewController = update
     super.init(nibName: nil, bundle: nil)
   }
   
@@ -109,7 +107,6 @@ extension NewToDoViewController: UITextFieldDelegate {
     if let text = fldTitle.text, text != "" {
       ToDoItem.createWith(taskDescription: text, list: currentList)
       fldTitle.text = ""
-      updateListViewController()
     }
     textField.resignFirstResponder()
     return true

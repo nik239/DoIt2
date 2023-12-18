@@ -16,6 +16,7 @@ final class ListsViewController: UITableViewController, UIViewControllerTransiti
   private func setupUI() {
     navigationItem.rightBarButtonItems = [editButtonItem, btnNewList]
     navigationItem.leftBarButtonItem = btnSort
+    self.navigationItem.title = "My Lists"
   }
   
   private lazy var pkrSort: UIPickerView = {
@@ -107,7 +108,8 @@ extension ListsViewController {
       if let list = try?
           PersistenceController.shared.context.existingObject(with: managedObjectID)
           as? ToDoItemList {
-        cell.lblDescription.text = list.title
+        cell.lblTitle.text = list.title
+        cell.lblNumberOfItems.text = "(\(list.toDos.count) items)"
       }
       return cell
     }

@@ -70,7 +70,6 @@ extension NewListViewController: UITextFieldDelegate {
       textField.resignFirstResponder()
       return true
     }
-    print("creating new list!")
     ToDoItemList.createWith(title: text)
     textField.resignFirstResponder()
     self.dismiss(animated: true)

@@ -9,12 +9,22 @@ import UIKit
 import SnapKit
 
 final class ListCell: UITableViewCell {
-  lazy var lblDescription: UILabel = {
+  lazy var lblTitle: UILabel = {
     let lbl = UILabel(frame: .zero)
     lbl.textAlignment = .left
     lbl.font = UIFont.systemFont(ofSize: 20)
     lbl.text = "list 0"
     lbl.numberOfLines = 0
+    self.contentView.addSubview(lbl)
+    return lbl
+  }()
+  
+  lazy var lblNumberOfItems: UILabel = {
+    let lbl = UILabel(frame: .zero)
+    lbl.textAlignment = .right
+    lbl.text = "(0 items)"
+    lbl.font = UIFont.systemFont(ofSize: 20)
+    lbl.textColor = .gray
     self.contentView.addSubview(lbl)
     return lbl
   }()
@@ -33,8 +43,12 @@ final class ListCell: UITableViewCell {
 //MARK: SnapKit Constraints
 extension ListCell {
   func setupConstraints() {
-    lblDescription.snp.makeConstraints{ make in
-      make.leading.trailing.equalToSuperview().inset(15).labeled("list-cell horizontal")
+    lblNumberOfItems.snp.makeConstraints{ make in
+      make.trailing.equalToSuperview().inset(15).labeled("ListCell NumberOfItems horizontal")
+      make.top.bottom.equalToSuperview().inset(10).labeled("ListCell NumberOfItems vertical")
+    }
+    lblTitle.snp.makeConstraints{ make in
+      make.leading.equalToSuperview().inset(15).labeled("list-cell horizontal")
       make.top.bottom.equalToSuperview().inset(10).labeled("list-cell vertical")
     }
   }

@@ -8,10 +8,10 @@
 import Foundation
 
 enum ToDosSorts: String, CaseIterable {
-  case dateRecent
+  case dateNewest
   case dateOldest
-  case priorityHighest
-  case priorityLowest
+//  case priorityHighest
+//  case priorityLowest
   case custom
 }
 
@@ -28,6 +28,17 @@ struct ListsSortPreference {
     }
     set {
       UserDefaults.standard.set(newValue.rawValue, forKey: "listsSortPreference")
+    }
+  }
+}
+
+struct ToDosSortPreference {
+  var current: ToDosSorts {
+    get {
+      ToDosSorts(rawValue: UserDefaults.standard.string(forKey: "ToDosSortPreference") ?? ToDosSorts.dateNewest.rawValue)!
+    }
+    set {
+      UserDefaults.standard.set(newValue.rawValue, forKey: "ToDosSortPreference")
     }
   }
 }
