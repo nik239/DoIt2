@@ -10,6 +10,7 @@ import SnapKit
 
 final class NewToDoViewController: UIViewController {
   let currentList: ToDoItemList
+  var toDoPriority: Int16 = 0
   
   init(currentList: ToDoItemList){
     self.currentList = currentList
@@ -28,35 +29,25 @@ final class NewToDoViewController: UIViewController {
   private func setupUI() {
     view.backgroundColor = .systemGray2
     view.addSubview(lblInstructions)
-    view.addSubview(svItemAdded)
+    view.addSubview(lblItemAdded)
+    view.addSubview(svPriority)
     view.addSubview(svTitle)
+    view.addSubview(priorityLine)
     fldTitle.delegate = self
     setupConstraints()
   }
   
-  lazy var imgItemAdded: UIImageView = {
-    let img = UIImage(systemName: "checkmark.circle.fill")!
-    img.withTintColor(.green)
-    let imgView = UIImageView(image: img)
-    return imgView
-  }()
-  
-  lazy var lblItemAdded: UILabel = {
-    let lbl = UILabel(frame: .zero)
-    lbl.text = "New to-do was created!"
-    lbl.font = UIFont.systemFont(ofSize: 20)
+  lazy var lblItemAdded: NotificationLabel = {
+    let lbl = NotificationLabel(frame: .zero)
+    lbl.text = "Item added!"
+    lbl.textAlignment = .center
+    lbl.font = UIFont.systemFont(ofSize: 15)
     lbl.textColor = .black
+    lbl.backgroundColor = .white
+    lbl.layer.cornerRadius = 7.5
+    lbl.clipsToBounds = true
+    lbl.alpha = 0
     return lbl
-  }()
-  
-  lazy var svItemAdded: UIStackView = {
-    let stackView = UIStackView(arrangedSubviews: [imgItemAdded, lblItemAdded])
-    stackView.alignment = .center
-    stackView.axis = .horizontal
-    stackView.distribution = .fillProportionally
-    stackView.backgroundColor = .white
-    
-    return stackView
   }()
   
   lazy var lblInstructions: UILabel = {
@@ -95,20 +86,71 @@ final class NewToDoViewController: UIViewController {
     stackView.alignment = .center
     stackView.axis = .horizontal
     stackView.distribution = .fillProportionally
-    view.addSubview(stackView)
-    
     return stackView
   }()
   
+  lazy var lblPriority: UILabel = {
+    let lbl = UILabel(frame: .zero)
+    lbl.textAlignment = .center
+    lbl.font = UIFont.systemFont(ofSize: 20)
+    lbl.text = "Priority:"
+    lbl.textColor = .systemGray6
+    return lbl
+  }()
+  
+  lazy var scPriority: UISegmentedControl = {
+    let sc = UISegmentedControl(frame: .zero)
+    sc.insertSegment(withTitle: "None", at: 0, animated: false)
+    sc.insertSegment(withTitle: "Low", at: 1, animated: false)
+    sc.insertSegment(withTitle: "Medium", at: 2, animated: false)
+    sc.insertSegment(withTitle: "High" , at: 3, animated: false)
+    sc.addTarget(self, action: #selector(segmentedControlValueChanged(_:)), for: .valueChanged)
+    sc.selectedSegmentIndex = 0
+    return sc
+  }()
+  
+  lazy var svPriority: UIStackView = {
+    let stackView = UIStackView(arrangedSubviews: [lblPriority, scPriority])
+    stackView.alignment = .center
+    stackView.axis = .horizontal
+    stackView.distribution = .fillProportionally
+    return stackView
+  }()
+  
+  lazy var priorityLine: UIView = {
+    let pl = PriorityLineView()
+    return pl
+  }()
+  
+  @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
+    switch sender.selectedSegmentIndex {
+    case 1:
+      toDoPriority = Priorities.low.rawValue
+    case 2:
+      toDoPriority = Priorities.medium.rawValue
+    case 3:
+      toDoPriority = Priorities.high.rawValue
+    default:
+      break
+    }
+  }
 }
 
+//MARK: TextFieldDelegate
 extension NewToDoViewController: UITextFieldDelegate {
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     if let text = fldTitle.text, text != "" {
-      ToDoItem.createWith(taskDescription: text, list: currentList)
+      ToDoItem.createWith(taskDescription: text, list: currentList, priority: toDoPriority)
       fldTitle.text = ""
     }
-    textField.resignFirstResponder()
+    UIView.animate(withDuration: 0.3) {
+      self.lblItemAdded.alpha = 1
+    }
+    DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
+      UIView.animate(withDuration: 0.3) {
+        self.lblItemAdded.alpha = 0
+      }
+    }
     return true
   }
 }
@@ -120,17 +162,9 @@ extension NewToDoViewController {
       make.top.equalToSuperview().inset(30)
       make.centerX.equalToSuperview()
     }
-    imgItemAdded.snp.makeConstraints { make in
-      make.width.equalTo(20)
-      make.height.equalTo(20)
-    }
     lblItemAdded.snp.makeConstraints { make in
-  //    make.centerX.equalToSuperview()
-    }
-    svItemAdded.snp.makeConstraints{ make in
       make.top.equalToSuperview().inset(30)
       make.centerX.equalToSuperview()
-      make.width.equalToSuperview().multipliedBy(0.85)
     }
     lblTitle.snp.makeConstraints { make in
       make.width.equalTo(60).labeled("NewToDoViewController lblTitle.width")
@@ -139,6 +173,17 @@ extension NewToDoViewController {
       make.width.equalToSuperview().multipliedBy(0.95).labeled("NewToDoViewController svTitle.width")
       make.centerX.equalToSuperview().labeled("NewToDoViewController svTitle.centerX")
       make.centerY.equalToSuperview().labeled("NewToDoViewController svTitle.cetnerY")
+    }
+    svPriority.snp.makeConstraints { make in
+      make.width.equalToSuperview().multipliedBy(0.95).labeled("NewToDoViewController svTitle.width")
+      make.centerX.equalToSuperview()
+      make.bottom.equalTo(svTitle).inset(50)
+    }
+    priorityLine.snp.makeConstraints { make in
+      make.width.equalTo(scPriority)
+      make.height.equalTo(3)
+      make.centerX.equalTo(scPriority)
+      make.bottom.equalTo(svPriority).inset(30)
     }
   }
 }

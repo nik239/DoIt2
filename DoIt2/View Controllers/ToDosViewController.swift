@@ -8,9 +8,13 @@
 import UIKit
 import CoreData
 
-enum ToDoSection: Int, CaseIterable {
-  case active
-  case finished
+enum Sections: String, CaseIterable {
+  case todo = " Current:"
+  case finished = " Finished:"
+  
+  static func sectionFor(_ isComplete: Bool) -> Sections {
+    return isComplete ? .finished : .todo
+  }
 }
 
 final class ToDosViewController: UITableViewController, UIViewControllerTransitioningDelegate {
@@ -67,35 +71,55 @@ extension ToDosViewController {
 //MARK: TableView
 extension ToDosViewController {
   private func setupTableView() {
-    tableView.register(ToDoItemCell.self, forCellReuseIdentifier: "\(ToDoItemCell.self)\(ToDoSection.active.rawValue)")
-    tableView.register(CompletedToDoItemCell.self, forCellReuseIdentifier: "\(ToDoItemCell.self)\(ToDoSection.finished.rawValue)")
+    tableView.register(ToDoItemCell.self, forCellReuseIdentifier: "\(ToDoItemCell.self)\(Sections.todo.rawValue)")
+    tableView.register(CompletedToDoItemCell.self, forCellReuseIdentifier: "\(ToDoItemCell.self)\(Sections.finished.rawValue)")
     dataSource = configureDataSource()
     tableView.delegate = self
   }
   func configureDataSource() -> ToDosViewDataSource {
     ToDosViewDataSource(currentList: currentList, tableView: tableView) {
       tableView, indexPath, managedObjectID -> UITableViewCell? in
-      let cell = tableView.dequeueReusableCell(withIdentifier:"\(ToDoItemCell.self)\(indexPath.section)", for: indexPath) as! ToDoItemCell
-      if let toDo = try?
-          PersistenceController.shared.context.existingObject(with: managedObjectID)
-          as? ToDoItem {
-        cell.lblDescription.text = toDo.taskDescription
+      if managedObjectID.isTemporaryID {
+        print("temporary ID!")
       }
-      return cell
+      if let toDo = try?
+          PersistenceController.shared.context.existingObject(with: managedObjectID) as? ToDoItem {
+        let id = "\(ToDoItemCell.self)" + Sections.sectionFor(toDo.isComplete).rawValue
+        let cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath) as! ToDoItemCell
+        cell.lblDescription.text = toDo.taskDescription
+        if !toDo.isComplete {
+          cell.imgvPriority.tintColor = Priorities(rawValue: toDo.priority)!.color
+        }
+        return cell
+      }
+      return nil
     }
+  }
+  
+  override func tableView(_ tableView: UITableView,
+                 viewForHeaderInSection section: Int) -> UIView? {
+    let lblSection = UILabel()
+    lblSection.text = Sections.sectionFor(section == 1).rawValue
+    lblSection.font = UIFont.boldSystemFont(ofSize: 20)
+    return lblSection
+  }
+  
+  override func tableView(_ tableView: UITableView,
+                 heightForHeaderInSection section: Int)
+    -> CGFloat {
+    20
   }
   
   override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
     let completeAction = UIContextualAction(style: .normal, title: "Done!") {
       [weak self] (action, view, completionHandler) in
-      if indexPath.section == ToDoSection.finished.rawValue {
+      let toDo = self!.dataSource!.fetchedResultsController.object(at: indexPath)
+      if toDo.isComplete {
         completionHandler(false)
         return
       }
-      let toDo = self!.dataSource!.fetchedResultsController.object(at: indexPath)
       toDo.isComplete = true
       PersistenceController.shared.saveContext()
-//      self?.destroyAndRemake(atIndex: indexPath.row, withDataSource: self?.dataSource)
       completionHandler(true)
     }
     
@@ -103,24 +127,5 @@ extension ToDosViewController {
     let configuration = UISwipeActionsConfiguration(actions: [completeAction])
     return configuration
   }
-  
-  // workaround for strikethrough not applying to newely finished ToDoItems
-  //(problem with diffableDataSource cell reuse), should switch to old data source
-//  func destroyAndRemake(atIndex index: Int, withDataSource dataSource: TaskListDataSource?){
-//    let request = ToDoItem.activeToDosFetchRequest(list: currentList)
-//    var taskDescription = ""
-//    do {
-//      let results = try PersistenceController.shared.container.viewContext.fetch(request)
-//      let objectToComplete = results[index] as ToDoItem
-//      taskDescription = objectToComplete.taskDescription
-//      PersistenceController.shared.container.viewContext.delete(objectToComplete)
-//    } catch {
-//      print("Failed to fetch ToDos!")
-//    }
-//    dataSource?.update()
-//    ToDoItem.createWith(taskDescription: taskDescription, isComplete: true, list: currentList)
-//    PersistenceController.shared.saveContext()
-//    dataSource?.update()
-//  }
 }
 

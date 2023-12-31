@@ -41,18 +41,14 @@ extension ToDoItem {
   static func createWith(taskDescription: String,
                          isComplete: Bool = false,
                          list: ToDoItemList, priority: Int16 = 0) {
-    let ToDo = ToDoItem(context: PersistenceController.shared.container.viewContext)
-    ToDo.creationDate = .now
-    ToDo.priority = priority 
-    ToDo.taskDescription = taskDescription
-    ToDo.isComplete = isComplete
-    ToDo.list = list
-    ToDo.sortOrder = 0
-    do {
-      try PersistenceController.shared.container.viewContext.save()
-    } catch {
-      let nserror = error as NSError
-      fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-    }
+    let toDo = ToDoItem(context: PersistenceController.shared.context)
+    try! PersistenceController.shared.context.obtainPermanentIDs(for: [toDo])
+    toDo.creationDate = .now
+    toDo.priority = priority 
+    toDo.taskDescription = taskDescription
+    toDo.isComplete = isComplete
+    toDo.list = list
+    toDo.sortOrder = 0
+    PersistenceController.shared.saveContext()
   }
 }

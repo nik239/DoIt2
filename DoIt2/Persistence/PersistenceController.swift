@@ -28,6 +28,9 @@ struct PersistenceController {
   func saveContext(){
     guard context.hasChanges else { return }
     do {
+      if !Thread.isMainThread {
+        print("Saving on a background Queue!")
+      }
       try context.save()
     } catch let error as NSError {
       print("Unresolved error \(error), \(error.userInfo)")

@@ -3,4 +3,102 @@
    uuid = "0F0FAA40-033F-4DE2-9CD0-C1F13C0A7CF9"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "CD817644-242D-45F6-A7B4-798EBEE6D802"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DoIt2/View Controllers/ToDosViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "83"
+            endingLineNumber = "83"
+            landmarkName = "configureDataSource()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "CD817644-242D-45F6-A7B4-798EBEE6D802 - bda93a58ddef1090"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (__C.UITableView, Foundation.IndexPath, __C.NSManagedObjectID) -&gt; Swift.Optional&lt;__C.UITableViewCell&gt; in DoIt2.ToDosViewController.configureDataSource() -&gt; DoIt2.ToDosViewDataSource"
+                  moduleName = "DoIt2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nikitaivanov/IOSDevelopment/DoIt2/DoIt2/View%20Controllers/ToDosViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "83"
+                  endingLineNumber = "83"
+                  offsetFromSymbolStart = "736">
+               </Location>
+               <Location
+                  uuid = "CD817644-242D-45F6-A7B4-798EBEE6D802 - bda93a58ddef1090"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (__C.UITableView, Foundation.IndexPath, __C.NSManagedObjectID) -&gt; Swift.Optional&lt;__C.UITableViewCell&gt; in DoIt2.ToDosViewController.configureDataSource() -&gt; DoIt2.ToDosViewDataSource"
+                  moduleName = "DoIt2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nikitaivanov/IOSDevelopment/DoIt2/DoIt2/View%20Controllers/ToDosViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "83"
+                  endingLineNumber = "83"
+                  offsetFromSymbolStart = "260">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "DECABEAB-BF98-4473-A932-02159CC36E15"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DoIt2/View Models/ToDosViewDataSource.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "64"
+            endingLineNumber = "64"
+            landmarkName = "tableView(_:moveRowAt:to:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "DECABEAB-BF98-4473-A932-02159CC36E15 - b5cd8462652f5aad"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "DoIt2.ToDosViewDataSource.tableView(_: __C.UITableView, moveRowAt: Foundation.IndexPath, to: Foundation.IndexPath) -&gt; ()"
+                  moduleName = "DoIt2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nikitaivanov/IOSDevelopment/DoIt2/DoIt2/View%20Models/ToDosViewDataSource.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "63"
+                  endingLineNumber = "63"
+                  offsetFromSymbolStart = "2120">
+               </Location>
+               <Location
+                  uuid = "DECABEAB-BF98-4473-A932-02159CC36E15 - f730c33d21d510cc"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in DoIt2.ToDosViewDataSource.tableView(_: __C.UITableView, moveRowAt: Foundation.IndexPath, to: Foundation.IndexPath) -&gt; ()"
+                  moduleName = "DoIt2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nikitaivanov/IOSDevelopment/DoIt2/DoIt2/View%20Models/ToDosViewDataSource.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "64"
+                  endingLineNumber = "64"
+                  offsetFromSymbolStart = "28">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

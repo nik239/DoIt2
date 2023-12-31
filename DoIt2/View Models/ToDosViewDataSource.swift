@@ -10,20 +10,19 @@ import CoreData
 
 final class ToDosViewDataSource: UITableViewDiffableDataSource<String, NSManagedObjectID> {
   let currentList: ToDoItemList
-  let currentSort = ToDosSortPreference()
   
   init(currentList: ToDoItemList, tableView: UITableView, cellProvider: @escaping UITableViewDiffableDataSource<String, NSManagedObjectID>.CellProvider) {
     self.currentList = currentList
     super.init(tableView: tableView, cellProvider: cellProvider)
   }
   
-  private var changeIsUserDriven = false
-  
+  let currentSort = ToDosSortPreference()
   let dateNewestSort = NSSortDescriptor(key: #keyPath(ToDoItem.creationDate), ascending: false)
   let dateOldestSort = NSSortDescriptor(key: #keyPath(ToDoItem.creationDate), ascending: true)
   let customSort = NSSortDescriptor(key: #keyPath(ToDoItem.sortOrder), ascending: true)
+  let completionSort = NSSortDescriptor(key: #keyPath(ToDoItem.isComplete), ascending: true)
   
-  
+  private var changeIsUserDriven = false
   
   lazy var fetchedResultsController:
   NSFetchedResultsController<ToDoItem> = {
@@ -45,18 +44,38 @@ final class ToDosViewDataSource: UITableViewDiffableDataSource<String, NSManaged
     let fetchRequest = ToDoItem.fetchRequest(list: currentList)
     switch currentSort.current {
     case .dateNewest:
-      fetchRequest.sortDescriptors = [dateNewestSort]
+      fetchRequest.sortDescriptors = [completionSort, dateNewestSort]
     case .dateOldest:
-      fetchRequest.sortDescriptors = [dateOldestSort]
+      fetchRequest.sortDescriptors = [completionSort, dateOldestSort]
     case .custom:
-      fetchRequest.sortDescriptors = [customSort, dateNewestSort]
+      fetchRequest.sortDescriptors = [completionSort, customSort, dateNewestSort]
     }
     return fetchRequest
   }
   
-  //MARK: Edditing Data
+  //MARK: TabeView
   override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-    return true
+    return indexPath.section == 0
+  }
+  
+  override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+    guard destinationIndexPath.section != 1 else {
+      
+      DispatchQueue.main.async {
+        tableView.reloadData()
+      }
+      
+      return
+    }
+    var toDos = fetchedResultsController.fetchedObjects!
+    changeIsUserDriven = true
+    let toDo = toDos[sourceIndexPath.row]
+    toDos.remove(at: sourceIndexPath.row)
+    toDos.insert(toDo, at: destinationIndexPath.row)
+    for (index, list) in toDos.enumerated() {
+      list.sortOrder = Int16(exactly:index)!
+    }
+    PersistenceController.shared.saveContext()
   }
   
   override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -65,8 +84,8 @@ final class ToDosViewDataSource: UITableViewDiffableDataSource<String, NSManaged
   
   override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
     if editingStyle == .delete {
-      let listToDelete = fetchedResultsController.object(at: indexPath)
-      PersistenceController.shared.context.delete(listToDelete)
+      let itemToDelete = fetchedResultsController.object(at: indexPath)
+      PersistenceController.shared.context.delete(itemToDelete)
       PersistenceController.shared.saveContext()
     }
   }
@@ -87,34 +106,4 @@ extension ToDosViewDataSource: NSFetchedResultsControllerDelegate {
   }
 }
   
-  
-  
-  
-  
-  
-  
-
-//  
-//  override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//    return section == 0 ? "Active" : "Finished"
-//  }
-//  
-//  override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath){
-//    if editingStyle == .delete {
-//      guard let itemToDelete = self.itemIdentifier(for: indexPath) else {
-//        print("Couldn't get toDoItem from dataSource!")
-//        return
-//      }
-//      PersistenceController.shared.container.viewContext.delete(itemToDelete)
-//      PersistenceController.shared.saveContext()
-//      update()
-//    }
-//  }
-//  
-//
-//  
-//  override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-//    return true
-//  }
-
 

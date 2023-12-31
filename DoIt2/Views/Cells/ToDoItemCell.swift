@@ -15,12 +15,20 @@ class ToDoItemCell: UITableViewCell {
     lbl.font = UIFont.systemFont(ofSize: 20)
     lbl.text = "task 0"
     lbl.numberOfLines = 0
-    self.contentView.addSubview(lbl)
     return lbl
+  }()
+  
+  lazy var imgvPriority: UIImageView = {
+    let img = UIImage(systemName: "square.fill")!
+    let imgv = UIImageView(image: img)
+    imgv.tintColor = Priorities.none.color
+    return imgv
   }()
   
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
+    contentView.addSubview(lblDescription)
+    contentView.addSubview(imgvPriority)
     setupConstraints()
   }
   
@@ -32,8 +40,15 @@ class ToDoItemCell: UITableViewCell {
 //MARK: SnapKit Constraints
 extension ToDoItemCell {
   func setupConstraints() {
+    imgvPriority.snp.makeConstraints { make in
+      make.trailing.equalToSuperview().inset(15)
+      make.centerY.equalToSuperview()
+    }
     lblDescription.snp.makeConstraints{ make in
-      make.leading.trailing.equalToSuperview().inset(15).labeled("label-cell horizontal")
+      make.leading.equalToSuperview().inset(15)
+      make.centerY.equalToSuperview()
+      make.trailing.equalTo(imgvPriority)
+//      make.leading.trailing.equalToSuperview().inset(15).labeled("label-cell horizontal")
       make.top.bottom.equalToSuperview().inset(15).labeled("label-cell vertical")
     }
   }
