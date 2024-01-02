@@ -136,6 +136,7 @@
 				A8614F592B27CDA300DCC068 /* ToDoItemList+CoreDataProperties.swift */,
 				A8614F5A2B27CDA300DCC068 /* ToDoItem+CoreDataClass.swift */,
 				A8614F5D2B27CDA300DCC068 /* ToDoItem+CoreDataProperties.swift */,
+				A8A1C9132B2D3EE500E08322 /* SortPreferences.swift */,
 			);
 			path = Persistence;
 			sourceTree = "<group>";
@@ -155,9 +156,8 @@
 			isa = PBXGroup;
 			children = (
 				A8614F702B27CDA400DCC068 /* ToDosViewDataSource.swift */,
-				A8A1C90D2B2CF90400E08322 /* PersistedDiffableDataSource.swift */,
 				A8F338E42B2BA1E000B18EB9 /* ListsViewDataSource.swift */,
-				A8A1C9132B2D3EE500E08322 /* SortPreferences.swift */,
+				A8A1C90D2B2CF90400E08322 /* PersistedDiffableDataSource.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
