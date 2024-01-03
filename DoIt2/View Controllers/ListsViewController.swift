@@ -8,9 +8,15 @@
 import UIKit
 import CoreData
 
+// MARK: -ListsViewControllerDelegate
+protocol ListsViewControllerDelegate: AnyObject {
+  func listsViewControllerDidSelectList(_ viewController: ListsViewController, list: ToDoItemList)
+}
+
 final class ListsViewController: UITableViewController, UIViewControllerTransitioningDelegate {
   private var dataSource: ListsViewDataSource!
   private var sortSelection = ListsSortPreference()
+  weak var delegate: ListsViewControllerDelegate?
   
   //MARK: UI
   private func setupUI() {
@@ -116,6 +122,7 @@ extension ListsViewController {
   }
   
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    //viewModel.didSelectRow(indexPath: IndexPath)
     let list = dataSource.fetchedResultsController.object(at: indexPath)
     self.navigationController?.pushViewController(ToDosViewController(style: .plain, currentList: list), animated: true)
   }
@@ -141,5 +148,4 @@ extension ListsViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     self.alrtSelectSort.textFields?.first?.placeholder = newVal
   }
 }
-
 
