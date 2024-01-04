@@ -7,11 +7,12 @@
 
 import UIKit
 
-public class HomeCoordinator: Coordinator {
+final class HomeCoordinator: Coordinator {
 
   // MARK: - Instance Properties
   var children: [Coordinator] = []
   let router: Router
+  let navigationController = UINavigationController()
 
   // MARK: - Object Lifecycle
   init(router: Router) {
@@ -19,27 +20,27 @@ public class HomeCoordinator: Coordinator {
   }
 
   // MARK: - Instance Methods
-  public func present(animated: Bool,
+  func present(animated: Bool,
                       onDismissed: (() -> Void)?) {
     let listsViewController = ListsViewController()
     listsViewController.delegate = self
-    let viewController =
-    UINavigationController(rootViewController: listsViewController)
-//    viewController.delegate = self
-    router.present(viewController,
+    navigationController.setViewControllers([listsViewController], animated: false)
+    router.present(navigationController,
                    animated: animated,
                    onDismissed: onDismissed)
   }
 }
 
-// MARK: - HomeViewControllerDelegate
+// MARK: - ListsViewControllerDelegate
 extension HomeCoordinator: ListsViewControllerDelegate {
-  func listsViewControllerDidSelectList(
-    _ viewController: ListsViewController, list: ToDoItemList) {
-//    let router =
-//      ModalNavigationRouter(parentViewController: viewController)
-//    let coordinator =
-//      PetAppointmentBuilderCoordinator(router: router)
-//    presentChild(coordinator, animated: true)
+  func listsViewControllerDidSelectList(list: ToDoItemList) {
+    let router = NavigationRouter(navigationController: navigationController)
+    let coordinator = ToDosCoordinator(router: router, list: list)
+    presentChild(coordinator, animated: true)
+  }
+  func listsViewControllerDidPressAdd() {
+    let router = NewObjectRouter(parentViewController: navigationController.viewControllers.first as! (UIViewController & UIViewControllerTransitioningDelegate))
+    let coordinator = NewListCoordinator(router: router)
+    presentChild(coordinator, animated: true)
   }
 }

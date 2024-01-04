@@ -10,7 +10,8 @@ import CoreData
 
 // MARK: -ListsViewControllerDelegate
 protocol ListsViewControllerDelegate: AnyObject {
-  func listsViewControllerDidSelectList(_ viewController: ListsViewController, list: ToDoItemList)
+  func listsViewControllerDidSelectList(list: ToDoItemList)
+  func listsViewControllerDidPressAdd()
 }
 
 final class ListsViewController: UITableViewController, UIViewControllerTransitioningDelegate {
@@ -69,11 +70,7 @@ final class ListsViewController: UITableViewController, UIViewControllerTransiti
   }()
   
   @objc func createNewList() {
-    let newListViewController = NewListViewController()
-    newListViewController.modalPresentationStyle = UIModalPresentationStyle.pageSheet
-    newListViewController.preferredContentSize = CGSize(width: 600, height: 300)
-    newListViewController.transitioningDelegate = self
-    present(newListViewController, animated: true, completion: nil)
+    delegate!.listsViewControllerDidPressAdd()
   }
 }
 
@@ -122,9 +119,8 @@ extension ListsViewController {
   }
   
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    //viewModel.didSelectRow(indexPath: IndexPath)
     let list = dataSource.fetchedResultsController.object(at: indexPath)
-    self.navigationController?.pushViewController(ToDosViewController(style: .plain, currentList: list), animated: true)
+    delegate!.listsViewControllerDidSelectList(list: list)
   }
 }
 

@@ -17,9 +17,14 @@ enum Sections: String, CaseIterable {
   }
 }
 
+protocol ToDosViewControllerDelegate: AnyObject {
+  func toDosViewControllerDidPressAdd(currentList: ToDoItemList)
+}
+
 final class ToDosViewController: UITableViewController, UIViewControllerTransitioningDelegate {
   private var dataSource: ToDosViewDataSource?
   var currentList: ToDoItemList
+  weak var delegate: ToDosViewControllerDelegate?
   
   init(style: UITableView.Style, currentList: ToDoItemList) {
     self.currentList = currentList
@@ -41,10 +46,7 @@ final class ToDosViewController: UITableViewController, UIViewControllerTransiti
   }()
   
   @objc func addButtonTapped() {
-    let newToDoViewController = NewToDoViewController(currentList: currentList)
-    newToDoViewController.modalPresentationStyle = UIModalPresentationStyle.pageSheet
-    newToDoViewController.transitioningDelegate = self
-    present(newToDoViewController, animated: true, completion: nil)
+    delegate!.toDosViewControllerDidPressAdd(currentList: currentList)
   }
 }
 
