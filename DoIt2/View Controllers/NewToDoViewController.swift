@@ -38,86 +38,56 @@ final class NewToDoViewController: UIViewController {
   }
   
   lazy var lblItemAdded: NotificationLabel = {
-    let lbl = NotificationLabel(frame: .zero)
-    lbl.text = "Item added!"
-    lbl.textAlignment = .center
-    lbl.font = UIFont.systemFont(ofSize: 15)
-    lbl.textColor = .black
-    lbl.backgroundColor = .white
-    lbl.layer.cornerRadius = 7.5
-    lbl.clipsToBounds = true
-    lbl.alpha = 0
+    let lbl = NotificationLabel()
     return lbl
   }()
   
-  lazy var lblInstructions: UILabel = {
-    let lbl = UILabel(frame: .zero)
-    lbl.numberOfLines = 0
+  lazy var lblInstructions: InstructionsLabel = {
+    let lbl = InstructionsLabel()
     lbl.text = """
     To create a new to-do enter a title and press return.
     To cancel swipe down.
     """
-    lbl.font = UIFont.preferredFont(forTextStyle: .footnote)
-    lbl.textColor = .systemGray6
     return lbl
   }()
   
-  lazy var lblTitle: UILabel = {
-    let lbl = UILabel(frame: .zero)
-    lbl.textAlignment = .center
-    lbl.font = UIFont.systemFont(ofSize: 20)
+  lazy var lblTitle: TitleLabel = {
+    let lbl = TitleLabel()
     lbl.text = "Name:"
-    lbl.textColor = .systemGray6
     return lbl
   }()
   
-  lazy var fldTitle: UITextField = {
-    let fld = UITextField(frame: .zero)
-    fld.textAlignment = .left
+  lazy var fldTitle: TitleField = {
+    let fld = TitleField()
     fld.textColor = traitCollection.userInterfaceStyle == .dark ? .white : .black
-    fld.borderStyle = .roundedRect
-    fld.backgroundColor = .systemGray6
     fld.placeholder = "Enter to-do description"
     return fld
   }()
   
-  lazy var svTitle: UIStackView = {
-    let stackView = UIStackView(arrangedSubviews: [lblTitle, fldTitle])
-    stackView.alignment = .center
-    stackView.axis = .horizontal
-    stackView.distribution = .fillProportionally
-    return stackView
+  lazy var svTitle: TitleStackView = {
+    let sv = TitleStackView(arrangedSubviews: [lblTitle, fldTitle])
+    return sv
   }()
   
-  lazy var lblPriority: UILabel = {
-    let lbl = UILabel(frame: .zero)
-    lbl.textAlignment = .center
-    lbl.font = UIFont.systemFont(ofSize: 20)
+  lazy var lblPriority: TitleLabel = {
+    let lbl = TitleLabel()
     lbl.text = "Priority:"
-    lbl.textColor = .systemGray6
     return lbl
   }()
   
-  lazy var scPriority: UISegmentedControl = {
-    let sc = UISegmentedControl(frame: .zero)
-    sc.insertSegment(withTitle: "None", at: 0, animated: false)
-    sc.insertSegment(withTitle: "Low", at: 1, animated: false)
-    sc.insertSegment(withTitle: "Medium", at: 2, animated: false)
-    sc.insertSegment(withTitle: "High" , at: 3, animated: false)
+  lazy var scPriority: PriorityControl = {
+    let sc = PriorityControl()
     sc.addTarget(self, action: #selector(segmentedControlValueChanged(_:)), for: .valueChanged)
     sc.selectedSegmentIndex = 0
     return sc
   }()
   
-  lazy var svPriority: UIStackView = {
-    let stackView = UIStackView(arrangedSubviews: [lblPriority, scPriority])
-    stackView.alignment = .center
-    stackView.axis = .horizontal
-    stackView.distribution = .fillProportionally
-    return stackView
+  lazy var svPriority: TitleStackView = {
+    let sv = TitleStackView(arrangedSubviews: [lblPriority, scPriority])
+    return sv
   }()
   
-  lazy var priorityLine: UIView = {
+  lazy var priorityLine: PriorityLineView = {
     let pl = PriorityLineView()
     return pl
   }()

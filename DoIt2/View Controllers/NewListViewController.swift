@@ -22,48 +22,35 @@ final class NewListViewController: UIViewController {
     setupConstraints()
   }
   
-  lazy var lblInstructions: UILabel = {
-    let lbl = UILabel(frame: .zero)
-    lbl.numberOfLines = 0
+  lazy var lblInstructions: InstructionsLabel = {
+    let lbl = InstructionsLabel()
     lbl.text = """
     To create a new list enter a title and press return.
     To cancel swipe down.
     """
-    lbl.font = UIFont.preferredFont(forTextStyle: .footnote)
-    lbl.textColor = .systemGray6
     return lbl
   }()
   
-  lazy var lblTitle: UILabel = {
-    let lbl = UILabel(frame: .zero)
-    lbl.textAlignment = .center
-    lbl.font = UIFont.systemFont(ofSize: 20)
+  lazy var lblTitle: TitleLabel = {
+    let lbl = TitleLabel()
     lbl.text = "Title:"
-    lbl.textColor = .systemGray6
     return lbl
   }()
   
-  lazy var fldTitle: UITextField = {
-    let fld = UITextField(frame: .zero)
-    fld.textAlignment = .left
-    fld.textColor = traitCollection.userInterfaceStyle == .dark ? .white : .black
-    fld.borderStyle = .roundedRect
-    fld.backgroundColor = .systemGray6
+  lazy var fldTitle: TitleField = {
+    let fld = TitleField()
     fld.placeholder = "Enter list title"
+    fld.textColor = traitCollection.userInterfaceStyle == .dark ? .white : .black
     return fld
   }()
   
-  lazy var svTitle: UIStackView = {
-    let stackView = UIStackView(arrangedSubviews: [lblTitle, fldTitle])
-    stackView.alignment = .center
-    stackView.axis = .horizontal
-    stackView.distribution = .fillProportionally
-    view.addSubview(stackView)
-    
-    return stackView
+  lazy var svTitle: TitleStackView = {
+    let sv = TitleStackView(arrangedSubviews: [lblTitle, fldTitle])
+    return sv
   }()
 }
 
+// MARK: - UITextFieldDelegate
 extension NewListViewController: UITextFieldDelegate {
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     guard let text = fldTitle.text, text != "" else {

@@ -25,7 +25,7 @@ enum Priorities: Int16, CaseIterable {
   }
 }
 
-class PriorityLineView: UIView {
+final class PriorityLineView: UIView {
   private let sgmntNone = UIView()
   private let sgmntLow = UIView()
   private let sgmntMed = UIView()
