@@ -45,14 +45,8 @@ final class ListsViewController: UITableViewController, UIViewControllerTransiti
       title: "Sort by:",
       message: nil,
       preferredStyle: .alert)
-    alrt.addTextField { fld in
-      fld.placeholder = self.sortSelection.current.rawValue
-      fld.borderStyle = .roundedRect
-      fld.inputView = self.pkrSort
-      fld.textAlignment = .center
-      fld.font = UIFont.boldSystemFont(ofSize: 20)
-      fld.tintColor = .clear
-    }
+    let sortPicker = SortPickerField(inputView: self.pkrSort, placeholder: self.sortSelection.current.rawValue)
+    alrt.addTextField((sortPicker) -> Void)
     let sortAction = UIAlertAction(
       title: "Apply",
       style: .default
