@@ -12,28 +12,37 @@ final class ToDosViewDataSource: UITableViewDiffableDataSource<String, NSManaged
   let currentList: ToDoItemList
   lazy var toDosFetch = ToDosFetch(dataSource: self, currentList: currentList)
   
+  //flag to prevent redundant/erroneous view updates
   private var changeIsUserDriven = false
   
   init(currentList: ToDoItemList, tableView: UITableView, cellProvider: @escaping UITableViewDiffableDataSource<String, NSManagedObjectID>.CellProvider) {
     self.currentList = currentList
     super.init(tableView: tableView, cellProvider: cellProvider)
   }
-
+  
+  func loadData() {
+    do {
+      try toDosFetch.controller.performFetch()
+    } catch let error as NSError {
+      print("Fetching error: \(error), \(error.userInfo)")
+    }
+  }
+  
+  //MARK: - TableView Edditing
   override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
     return indexPath.section == 0
   }
   
   override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+    //no completing an item by dragging it!
     guard destinationIndexPath.section != 1 else {
-      
       DispatchQueue.main.async {
         tableView.reloadData()
       }
-      
       return
     }
-    var toDos = toDosFetch.controller.fetchedObjects!
     changeIsUserDriven = true
+    var toDos = toDosFetch.controller.fetchedObjects!
     let toDo = toDos[sourceIndexPath.row]
     toDos.remove(at: sourceIndexPath.row)
     toDos.insert(toDo, at: destinationIndexPath.row)

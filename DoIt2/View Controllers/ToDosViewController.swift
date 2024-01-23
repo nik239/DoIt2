@@ -10,14 +10,6 @@ import UIKit
 enum Sections: String, CaseIterable {
   case todo = " Current:"
   case finished = " Finished:"
-  
-  static func sectionFor(_ isComplete: Bool) -> Sections {
-    return isComplete ? .finished : .todo
-  }
-}
-
-protocol ToDosViewControllerDelegate: AnyObject {
-  func toDosViewControllerDidPressAdd(currentList: ToDoItemList)
 }
 
 final class ToDosViewController: UITableViewController, UIViewControllerTransitioningDelegate {
@@ -60,7 +52,7 @@ extension ToDosViewController {
   override func viewIsAppearing(_ animated: Bool) {
     super.viewIsAppearing(animated)
     UIView.performWithoutAnimation {
-      model.fetchData()
+      model.dataSource!.loadData()
     }
   }
 }
@@ -77,8 +69,8 @@ extension ToDosViewController {
   override func tableView(_ tableView: UITableView,
                  viewForHeaderInSection section: Int) -> UIView? {
     let lblSection = UILabel()
-    lblSection.text = Sections.sectionFor(section == 1).rawValue
     lblSection.font = UIFont.boldSystemFont(ofSize: 20)
+    lblSection.text = model.sectionTitle(for: section)
     return lblSection
   }
   
@@ -99,3 +91,7 @@ extension ToDosViewController {
   }
 }
 
+//MARK: - ToDosViewControllerDelegate
+protocol ToDosViewControllerDelegate: AnyObject {
+  func toDosViewControllerDidPressAdd(currentList: ToDoItemList)
+}

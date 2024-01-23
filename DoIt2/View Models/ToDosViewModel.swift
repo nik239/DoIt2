@@ -20,7 +20,7 @@ struct ToDosViewModel {
       }
       if let toDo = try?
           PersistenceController.shared.context.existingObject(with: managedObjectID) as? ToDoItem {
-        let id = "\(ToDoItemCell.self)" + Sections.sectionFor(toDo.isComplete).rawValue
+        let id = "\(ToDoItemCell.self)" + sectionTitle(isComplete: toDo.isComplete)
         let cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath) as! ToDoItemCell
         cell.lblDescription.text = toDo.taskDescription
         if !toDo.isComplete {
@@ -32,15 +32,13 @@ struct ToDosViewModel {
     }
   }
   
-  //seems like this belongs in the data source
-  func fetchData() {
-    do {
-      try dataSource!.toDosFetch.controller.performFetch()
-    } catch let error as NSError {
-      print("Fetching error: \(error), \(error.userInfo)")
-    }
+  func sectionTitle(for section: Int) -> String {
+    return sectionTitle(isComplete: (section == 1))
   }
   
+  func sectionTitle(isComplete: Bool) -> String {
+    return isComplete ? Sections.finished.rawValue : Sections.todo.rawValue
+  }
   
   func markAsComplete(indexPath: IndexPath, completionHandler: (Bool) -> Void){
     let toDo = dataSource!.toDosFetch.controller.object(at: indexPath)
