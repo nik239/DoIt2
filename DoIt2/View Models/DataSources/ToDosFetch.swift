@@ -12,11 +12,12 @@ struct ToDosFetch {
   
   let currentList: ToDoItemList
   
-  let currentSort = ToDosSortPreference()
   let dateNewestSort = NSSortDescriptor(key: #keyPath(ToDoItem.creationDate), ascending: false)
   let dateOldestSort = NSSortDescriptor(key: #keyPath(ToDoItem.creationDate), ascending: true)
   let customSort = NSSortDescriptor(key: #keyPath(ToDoItem.sortOrder), ascending: true)
   let completionSort = NSSortDescriptor(key: #keyPath(ToDoItem.isComplete), ascending: true)
+  
+  let currentSort = ToDosSortPreference()
   
   lazy var controller:
   NSFetchedResultsController<ToDoItem> = {

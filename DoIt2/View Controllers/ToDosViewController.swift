@@ -62,7 +62,7 @@ extension ToDosViewController {
   private func setupTableView() {
     tableView.register(ToDoItemCell.self, forCellReuseIdentifier: "\(ToDoItemCell.self)\(Sections.todo.rawValue)")
     tableView.register(CompletedToDoItemCell.self, forCellReuseIdentifier: "\(ToDoItemCell.self)\(Sections.finished.rawValue)")
-    model.dataSource = model.configureDataSource()
+    model.configureDataSource()
     tableView.delegate = self
   }
   

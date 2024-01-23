@@ -12,7 +12,11 @@ struct ToDosViewModel {
   var currentList: ToDoItemList
   var tableView: UITableView?
   
-  func configureDataSource() -> ToDosViewDataSource {
+  mutating func configureDataSource() {
+    dataSource = configuredDataSource()
+  }
+  
+  func configuredDataSource() -> ToDosViewDataSource {
     ToDosViewDataSource(currentList: currentList, tableView: tableView!) {
       tableView, indexPath, managedObjectID -> UITableViewCell? in
       if managedObjectID.isTemporaryID {

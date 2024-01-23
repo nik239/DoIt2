@@ -12,7 +12,7 @@ final class ToDosViewDataSource: UITableViewDiffableDataSource<String, NSManaged
   let currentList: ToDoItemList
   lazy var toDosFetch = ToDosFetch(dataSource: self, currentList: currentList)
   
-  //flag to prevent redundant/erroneous view updates
+  //flag that prevents redundant/erroneous view updates
   private var changeIsUserDriven = false
   
   init(currentList: ToDoItemList, tableView: UITableView, cellProvider: @escaping UITableViewDiffableDataSource<String, NSManagedObjectID>.CellProvider) {
@@ -28,7 +28,7 @@ final class ToDosViewDataSource: UITableViewDiffableDataSource<String, NSManaged
     }
   }
   
-  //MARK: - TableView Edditing
+  //MARK: - TableView Editing
   override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
     return indexPath.section == 0
   }

@@ -8,15 +8,8 @@
 import UIKit
 import CoreData
 
-// MARK: -ListsViewControllerDelegate
-protocol ListsViewControllerDelegate: AnyObject {
-  func listsViewControllerDidSelectList(list: ToDoItemList)
-  func listsViewControllerDidPressAdd()
-}
-
 final class ListsViewController: UITableViewController, UIViewControllerTransitioningDelegate {
-  private var dataSource: ListsViewDataSource!
-  private var sortSelection = ListsSortPreference()
+  lazy var model = ListsViewModel()
   weak var delegate: ListsViewControllerDelegate?
   
   //MARK: UI
@@ -46,7 +39,7 @@ final class ListsViewController: UITableViewController, UIViewControllerTransiti
       message: nil,
       preferredStyle: .alert)
     alrt.addTextField { fld in
-      fld.placeholder = self.sortSelection.current.rawValue
+      fld.placeholder = self.model.sortSelection.current.rawValue
       fld.borderStyle = .roundedRect
       fld.inputView = self.pkrSort
       fld.textAlignment = .center
@@ -57,7 +50,7 @@ final class ListsViewController: UITableViewController, UIViewControllerTransiti
       title: "Apply",
       style: .default
     ) {[unowned self] _ in
-      self.dataSource.sort()
+      self.model.dataSource!.listsFetch.sort()
     }
     alrt.addAction(sortAction)
     alrt.addAction(UIAlertAction(title: "Cancel", style: .cancel))
@@ -78,6 +71,7 @@ final class ListsViewController: UITableViewController, UIViewControllerTransiti
 extension ListsViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
+    model.tableView = tableView
     setupUI()
     setupTableView()
   }
@@ -85,11 +79,7 @@ extension ListsViewController {
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     UIView.performWithoutAnimation {
-      do {
-        try dataSource.fetchedResultsController.performFetch()
-      } catch let error as NSError {
-        print("Fetching error: \(error), \(error.userInfo)")
-      }
+      model.dataSource!.loadData()
     }
   }
 }
@@ -98,50 +88,39 @@ extension ListsViewController {
 extension ListsViewController {
   func setupTableView() {
     tableView.register(ListCell.self, forCellReuseIdentifier: "\(ListCell.self)")
-    dataSource = configureDataSource()
     tableView.delegate = self
-  }
-  
-  func configureDataSource() -> ListsViewDataSource {
-    ListsViewDataSource(tableView: tableView) {
-      tableView, indexPath, managedObjectID -> UITableViewCell? in
-      let cell = tableView.dequeueReusableCell(
-        withIdentifier:"\(ListCell.self)",
-        for: indexPath) as! ListCell
-      if let list = try?
-          PersistenceController.shared.context.existingObject(with: managedObjectID)
-          as? ToDoItemList {
-        cell.lblTitle.text = list.title
-        cell.lblNumberOfItems.text = "(\(list.toDos.count) items)"
-      }
-      return cell
-    }
+    model.configureDataSource()
   }
   
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    let list = dataSource.fetchedResultsController.object(at: indexPath)
-    delegate!.listsViewControllerDidSelectList(list: list)
+    let list = model.dataSource?.listsFetch.controller.object(at: indexPath)
+    delegate!.listsViewControllerDidSelectList(list: list!)
   }
 }
 
 //MARK: PickerView
 extension ListsViewController: UIPickerViewDataSource, UIPickerViewDelegate {
   func numberOfComponents(in pickerView: UIPickerView) -> Int {
-      return 1
+    return model.numberOfComponents
   }
 
   func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-    return ListsSorts.allCases.count
+    return model.numberOfSorts
   }
 
   func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-    return ListsSorts.allCases[row].rawValue
+    return model.titleForSortRow(at: row)
   }
   
   func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-    let newVal = ListsSorts.allCases[row].rawValue
-    sortSelection.current = ListsSorts(rawValue: newVal)!
-    self.alrtSelectSort.textFields?.first?.placeholder = newVal
+    let name = model.titleForSortRow(at: row)
+    model.updateSortSelection(to: name)
+    alrtSelectSort.textFields?.first?.placeholder = name
   }
 }
 
+// MARK: -ListsViewControllerDelegate
+protocol ListsViewControllerDelegate: AnyObject {
+  func listsViewControllerDidSelectList(list: ToDoItemList)
+  func listsViewControllerDidPressAdd()
+}
