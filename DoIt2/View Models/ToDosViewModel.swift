@@ -32,16 +32,18 @@ struct ToDosViewModel {
     }
   }
   
+  //seems like this belongs in the data source
   func fetchData() {
     do {
-      try dataSource!.fetchedResultsController.performFetch()
+      try dataSource!.toDosFetch.controller.performFetch()
     } catch let error as NSError {
       print("Fetching error: \(error), \(error.userInfo)")
     }
   }
   
+  
   func markAsComplete(indexPath: IndexPath, completionHandler: (Bool) -> Void){
-    let toDo = dataSource!.fetchedResultsController.object(at: indexPath)
+    let toDo = dataSource!.toDosFetch.controller.object(at: indexPath)
     if toDo.isComplete {
       completionHandler(false)
       return

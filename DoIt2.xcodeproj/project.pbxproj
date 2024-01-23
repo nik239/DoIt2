@@ -16,6 +16,7 @@
 		A84D11632B46188100C62AAF /* ToDosCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84D11622B46188100C62AAF /* ToDosCoordinator.swift */; };
 		A8600F732B49FBFA00CAE2A1 /* SortPickerField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8600F722B49FBFA00CAE2A1 /* SortPickerField.swift */; };
 		A86125D12B5F327600A00159 /* ToDosViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86125D02B5F327600A00159 /* ToDosViewModel.swift */; };
+		A86125D52B5F576100A00159 /* ToDosFetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86125D42B5F576100A00159 /* ToDosFetch.swift */; };
 		A8614F442B27CD1F00DCC068 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = A8614F432B27CD1F00DCC068 /* SnapKit */; };
 		A8614F762B27CDA400DCC068 /* DoIt.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A8614F482B27CDA300DCC068 /* DoIt.xcdatamodeld */; };
 		A8614F772B27CDA400DCC068 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A8614F4A2B27CDA300DCC068 /* Assets.xcassets */; };
@@ -58,6 +59,7 @@
 		A84D11622B46188100C62AAF /* ToDosCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDosCoordinator.swift; sourceTree = "<group>"; };
 		A8600F722B49FBFA00CAE2A1 /* SortPickerField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortPickerField.swift; sourceTree = "<group>"; };
 		A86125D02B5F327600A00159 /* ToDosViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDosViewModel.swift; sourceTree = "<group>"; };
+		A86125D42B5F576100A00159 /* ToDosFetch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDosFetch.swift; sourceTree = "<group>"; };
 		A8614F2B2B27CCF700DCC068 /* DoIt2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DoIt2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A8614F492B27CDA300DCC068 /* DoIt.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DoIt.xcdatamodel; sourceTree = "<group>"; };
 		A8614F4A2B27CDA300DCC068 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -136,12 +138,41 @@
 			path = Routers;
 			sourceTree = "<group>";
 		};
-		A8600F712B49FBDD00CAE2A1 /* ListsVCUIModels */ = {
+		A8600F712B49FBDD00CAE2A1 /* ListsViewController */ = {
 			isa = PBXGroup;
 			children = (
 				A8600F722B49FBFA00CAE2A1 /* SortPickerField.swift */,
 			);
-			path = ListsVCUIModels;
+			path = ListsViewController;
+			sourceTree = "<group>";
+		};
+		A86125D22B5F564200A00159 /* VC Components */ = {
+			isa = PBXGroup;
+			children = (
+				A8600F712B49FBDD00CAE2A1 /* ListsViewController */,
+				A86B82B22B48A6E600E24353 /* NewListViewController */,
+				A86B82BB2B48B58800E24353 /* NewToDoViewController */,
+			);
+			path = "VC Components";
+			sourceTree = "<group>";
+		};
+		A86125D32B5F56DE00A00159 /* DataSources */ = {
+			isa = PBXGroup;
+			children = (
+				A8614F702B27CDA400DCC068 /* ToDosViewDataSource.swift */,
+				A86125D42B5F576100A00159 /* ToDosFetch.swift */,
+				A8F338E42B2BA1E000B18EB9 /* ListsViewDataSource.swift */,
+				A8A1C90D2B2CF90400E08322 /* PersistedDiffableDataSource.swift */,
+			);
+			path = DataSources;
+			sourceTree = "<group>";
+		};
+		A86125D62B5F594800A00159 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A8614F582B27CDA300DCC068 /* Persistence */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		A8614F222B27CCF700DCC068 = {
@@ -166,7 +197,7 @@
 				A84D11552B45AC9200C62AAF /* Flows */,
 				A8614F6F2B27CDA400DCC068 /* View Models */,
 				A8614F682B27CDA300DCC068 /* View Controllers */,
-				A8614F582B27CDA300DCC068 /* Persistence */,
+				A86125D62B5F594800A00159 /* Model */,
 				A8614F5F2B27CDA300DCC068 /* AppDelegate.swift */,
 				A8614F4A2B27CDA300DCC068 /* Assets.xcassets */,
 				A8614F712B27CDA400DCC068 /* LaunchScreen.storyboard */,
@@ -215,18 +246,14 @@
 			isa = PBXGroup;
 			children = (
 				A86125D02B5F327600A00159 /* ToDosViewModel.swift */,
-				A8614F702B27CDA400DCC068 /* ToDosViewDataSource.swift */,
-				A8F338E42B2BA1E000B18EB9 /* ListsViewDataSource.swift */,
-				A8A1C90D2B2CF90400E08322 /* PersistedDiffableDataSource.swift */,
-				A8600F712B49FBDD00CAE2A1 /* ListsVCUIModels */,
+				A86125D32B5F56DE00A00159 /* DataSources */,
 				A8614F502B27CDA300DCC068 /* Cells */,
-				A86B82B22B48A6E600E24353 /* NewListUIModels */,
-				A86B82BB2B48B58800E24353 /* NewToDoUIModels */,
+				A86125D22B5F564200A00159 /* VC Components */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
 		};
-		A86B82B22B48A6E600E24353 /* NewListUIModels */ = {
+		A86B82B22B48A6E600E24353 /* NewListViewController */ = {
 			isa = PBXGroup;
 			children = (
 				A84B0CB92B4474AE00D92BAD /* InstructionsLabel.swift */,
@@ -234,17 +261,17 @@
 				A86B82B72B48AAF400E24353 /* TitleField.swift */,
 				A86B82B52B48A78F00E24353 /* TitleStackView.swift */,
 			);
-			path = NewListUIModels;
+			path = NewListViewController;
 			sourceTree = "<group>";
 		};
-		A86B82BB2B48B58800E24353 /* NewToDoUIModels */ = {
+		A86B82BB2B48B58800E24353 /* NewToDoViewController */ = {
 			isa = PBXGroup;
 			children = (
 				A86B82B92B48B2B600E24353 /* NotificationLabel.swift */,
 				A876E1E72B48B71C00C790B6 /* PriorityControl.swift */,
 				A8B9CE802B3E42C5007D903C /* PriorityLineView.swift */,
 			);
-			path = NewToDoUIModels;
+			path = NewToDoViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -343,6 +370,7 @@
 				A84D11612B46145B00C62AAF /* NavigationRouter.swift in Sources */,
 				A87097AC2B474ECF00297205 /* NewListCoordinator.swift in Sources */,
 				A8614F912B27CDA400DCC068 /* ToDosViewController.swift in Sources */,
+				A86125D52B5F576100A00159 /* ToDosFetch.swift in Sources */,
 				A8600F732B49FBFA00CAE2A1 /* SortPickerField.swift in Sources */,
 				A8F338E52B2BA1E000B18EB9 /* ListsViewDataSource.swift in Sources */,
 				A8614F832B27CDA400DCC068 /* ToDoItem+CoreDataClass.swift in Sources */,
