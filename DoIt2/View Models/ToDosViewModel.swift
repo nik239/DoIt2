@@ -11,6 +11,7 @@ struct ToDosViewModel {
   var dataSource: ToDosViewDataSource?
   var currentList: ToDoItemList
   var tableView: UITableView?
+  weak var delegate: ToDosViewControllerDelegate?
   
   mutating func configureDataSource() {
     dataSource = configuredDataSource()
@@ -36,6 +37,10 @@ struct ToDosViewModel {
     }
   }
   
+  func presentNewToDoView(){
+    delegate!.toDosViewControllerDidPressAdd(currentList: currentList)
+  }
+  
   func sectionTitle(for section: Int) -> String {
     return sectionTitle(isComplete: (section == 1))
   }
@@ -54,4 +59,5 @@ struct ToDosViewModel {
     PersistenceController.shared.saveContext()
     completionHandler(true)
   }
+  
 }

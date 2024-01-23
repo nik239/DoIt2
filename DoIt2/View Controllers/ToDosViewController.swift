@@ -13,8 +13,7 @@ enum Sections: String, CaseIterable {
 }
 
 final class ToDosViewController: UITableViewController, UIViewControllerTransitioningDelegate {
-  private var model: ToDosViewModel
-  weak var delegate: ToDosViewControllerDelegate?
+  var model: ToDosViewModel
   
   init(style: UITableView.Style, currentList: ToDoItemList) {
     model = ToDosViewModel(currentList: currentList)
@@ -36,7 +35,7 @@ final class ToDosViewController: UITableViewController, UIViewControllerTransiti
   }()
   
   @objc func addButtonTapped() {
-    delegate!.toDosViewControllerDidPressAdd(currentList: model.currentList)
+    model.presentNewToDoView()
   }
 }
 

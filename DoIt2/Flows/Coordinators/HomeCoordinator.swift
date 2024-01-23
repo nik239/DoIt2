@@ -23,7 +23,7 @@ final class HomeCoordinator: Coordinator {
   func present(animated: Bool,
                       onDismissed: (() -> Void)?) {
     let listsViewController = ListsViewController()
-    listsViewController.delegate = self
+    listsViewController.model.delegate = self
     navigationController.setViewControllers([listsViewController], animated: false)
     router.present(navigationController,
                    animated: animated,

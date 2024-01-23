@@ -10,6 +10,7 @@ import UIKit
 struct ListsViewModel {
   var dataSource: ListsViewDataSource?
   var tableView: UITableView?
+  weak var delegate: ListsViewControllerDelegate?
   
   var sortSelection = ListsSortPreference()
   let numberOfSorts = ListsSorts.allCases.count
@@ -30,6 +31,15 @@ struct ListsViewModel {
       }
       return cell
     }
+  }
+  
+  func presentNewListView() {
+    delegate!.listsViewControllerDidPressAdd()
+  }
+  
+  func viewList(at indexPath: IndexPath) {
+    let list = dataSource!.listsFetch.controller.object(at: indexPath)
+    delegate!.listsViewControllerDidSelectList(list: list)
   }
   
   func titleForSortRow(at index: Int) -> String {

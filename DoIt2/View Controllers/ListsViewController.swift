@@ -10,7 +10,6 @@ import CoreData
 
 final class ListsViewController: UITableViewController, UIViewControllerTransitioningDelegate {
   lazy var model = ListsViewModel()
-  weak var delegate: ListsViewControllerDelegate?
   
   //MARK: UI
   private func setupUI() {
@@ -58,12 +57,12 @@ final class ListsViewController: UITableViewController, UIViewControllerTransiti
   }()
   
   private lazy var btnNewList: UIBarButtonItem = {
-    let btn = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(createNewList))
+    let btn = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didPressAdd))
     return btn
   }()
   
-  @objc func createNewList() {
-    delegate!.listsViewControllerDidPressAdd()
+  @objc func didPressAdd() {
+    model.presentNewListView()
   }
 }
 
@@ -93,8 +92,7 @@ extension ListsViewController {
   }
   
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    let list = model.dataSource?.listsFetch.controller.object(at: indexPath)
-    delegate!.listsViewControllerDidSelectList(list: list!)
+    model.viewList(at: indexPath)
   }
 }
 

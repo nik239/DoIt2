@@ -19,7 +19,7 @@ final class ToDosCoordinator: Coordinator {
     self.list = list
     self.router = router
     self.viewController = ToDosViewController(style: .plain, currentList: list)
-    viewController.delegate = self
+    viewController.model.delegate = self
   }
   func present(animated: Bool,
                onDismissed: (() -> Void)?){
