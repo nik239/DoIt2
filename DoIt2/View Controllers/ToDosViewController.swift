@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import CoreData
 
 enum Sections: String, CaseIterable {
   case todo = " Current:"
@@ -22,12 +21,11 @@ protocol ToDosViewControllerDelegate: AnyObject {
 }
 
 final class ToDosViewController: UITableViewController, UIViewControllerTransitioningDelegate {
-  private var dataSource: ToDosViewDataSource?
-  var currentList: ToDoItemList
+  private var model: ToDosViewModel
   weak var delegate: ToDosViewControllerDelegate?
   
   init(style: UITableView.Style, currentList: ToDoItemList) {
-    self.currentList = currentList
+    model = ToDosViewModel(currentList: currentList)
     super.init(style: style)
   }
   
@@ -37,7 +35,7 @@ final class ToDosViewController: UITableViewController, UIViewControllerTransiti
   
   private func setupUI() {
     navigationItem.rightBarButtonItems = [editButtonItem, addButton]
-    self.navigationItem.title = currentList.title
+    self.navigationItem.title = model.currentList.title
   }
   
   private lazy var addButton: UIBarButtonItem = {
@@ -46,7 +44,7 @@ final class ToDosViewController: UITableViewController, UIViewControllerTransiti
   }()
   
   @objc func addButtonTapped() {
-    delegate!.toDosViewControllerDidPressAdd(currentList: currentList)
+    delegate!.toDosViewControllerDidPressAdd(currentList: model.currentList)
   }
 }
 
@@ -54,6 +52,7 @@ final class ToDosViewController: UITableViewController, UIViewControllerTransiti
 extension ToDosViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
+    model.tableView = tableView
     setupUI()
     setupTableView()
   }
@@ -61,11 +60,7 @@ extension ToDosViewController {
   override func viewIsAppearing(_ animated: Bool) {
     super.viewIsAppearing(animated)
     UIView.performWithoutAnimation {
-      do {
-        try dataSource!.fetchedResultsController.performFetch()
-      } catch let error as NSError {
-        print("Fetching error: \(error), \(error.userInfo)")
-      }
+      model.fetchData()
     }
   }
 }
@@ -75,27 +70,8 @@ extension ToDosViewController {
   private func setupTableView() {
     tableView.register(ToDoItemCell.self, forCellReuseIdentifier: "\(ToDoItemCell.self)\(Sections.todo.rawValue)")
     tableView.register(CompletedToDoItemCell.self, forCellReuseIdentifier: "\(ToDoItemCell.self)\(Sections.finished.rawValue)")
-    dataSource = configureDataSource()
+    model.dataSource = model.configureDataSource()
     tableView.delegate = self
-  }
-  func configureDataSource() -> ToDosViewDataSource {
-    ToDosViewDataSource(currentList: currentList, tableView: tableView) {
-      tableView, indexPath, managedObjectID -> UITableViewCell? in
-      if managedObjectID.isTemporaryID {
-        print("temporary ID!")
-      }
-      if let toDo = try?
-          PersistenceController.shared.context.existingObject(with: managedObjectID) as? ToDoItem {
-        let id = "\(ToDoItemCell.self)" + Sections.sectionFor(toDo.isComplete).rawValue
-        let cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath) as! ToDoItemCell
-        cell.lblDescription.text = toDo.taskDescription
-        if !toDo.isComplete {
-          cell.imgvPriority.tintColor = Priorities(rawValue: toDo.priority)!.color
-        }
-        return cell
-      }
-      return nil
-    }
   }
   
   override func tableView(_ tableView: UITableView,
@@ -115,16 +91,8 @@ extension ToDosViewController {
   override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
     let completeAction = UIContextualAction(style: .normal, title: "Done!") {
       [weak self] (action, view, completionHandler) in
-      let toDo = self!.dataSource!.fetchedResultsController.object(at: indexPath)
-      if toDo.isComplete {
-        completionHandler(false)
-        return
-      }
-      toDo.isComplete = true
-      PersistenceController.shared.saveContext()
-      completionHandler(true)
+      self!.model.markAsComplete(indexPath: indexPath, completionHandler: completionHandler)
     }
-    
     completeAction.backgroundColor = UIColor.systemGreen
     let configuration = UISwipeActionsConfiguration(actions: [completeAction])
     return configuration

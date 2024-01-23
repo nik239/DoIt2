@@ -15,6 +15,7 @@
 		A84D11612B46145B00C62AAF /* NavigationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84D11602B46145B00C62AAF /* NavigationRouter.swift */; };
 		A84D11632B46188100C62AAF /* ToDosCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84D11622B46188100C62AAF /* ToDosCoordinator.swift */; };
 		A8600F732B49FBFA00CAE2A1 /* SortPickerField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8600F722B49FBFA00CAE2A1 /* SortPickerField.swift */; };
+		A86125D12B5F327600A00159 /* ToDosViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86125D02B5F327600A00159 /* ToDosViewModel.swift */; };
 		A8614F442B27CD1F00DCC068 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = A8614F432B27CD1F00DCC068 /* SnapKit */; };
 		A8614F762B27CDA400DCC068 /* DoIt.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A8614F482B27CDA300DCC068 /* DoIt.xcdatamodeld */; };
 		A8614F772B27CDA400DCC068 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A8614F4A2B27CDA300DCC068 /* Assets.xcassets */; };
@@ -56,6 +57,7 @@
 		A84D11602B46145B00C62AAF /* NavigationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRouter.swift; sourceTree = "<group>"; };
 		A84D11622B46188100C62AAF /* ToDosCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDosCoordinator.swift; sourceTree = "<group>"; };
 		A8600F722B49FBFA00CAE2A1 /* SortPickerField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortPickerField.swift; sourceTree = "<group>"; };
+		A86125D02B5F327600A00159 /* ToDosViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDosViewModel.swift; sourceTree = "<group>"; };
 		A8614F2B2B27CCF700DCC068 /* DoIt2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DoIt2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A8614F492B27CDA300DCC068 /* DoIt.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DoIt.xcdatamodel; sourceTree = "<group>"; };
 		A8614F4A2B27CDA300DCC068 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -212,10 +214,11 @@
 		A8614F6F2B27CDA400DCC068 /* View Models */ = {
 			isa = PBXGroup;
 			children = (
-				A8600F712B49FBDD00CAE2A1 /* ListsVCUIModels */,
+				A86125D02B5F327600A00159 /* ToDosViewModel.swift */,
 				A8614F702B27CDA400DCC068 /* ToDosViewDataSource.swift */,
 				A8F338E42B2BA1E000B18EB9 /* ListsViewDataSource.swift */,
 				A8A1C90D2B2CF90400E08322 /* PersistedDiffableDataSource.swift */,
+				A8600F712B49FBDD00CAE2A1 /* ListsVCUIModels */,
 				A8614F502B27CDA300DCC068 /* Cells */,
 				A86B82B22B48A6E600E24353 /* NewListUIModels */,
 				A86B82BB2B48B58800E24353 /* NewToDoUIModels */,
@@ -345,6 +348,7 @@
 				A8614F832B27CDA400DCC068 /* ToDoItem+CoreDataClass.swift in Sources */,
 				A8614F972B27CDA400DCC068 /* ToDosViewDataSource.swift in Sources */,
 				A84B0CBA2B4474AE00D92BAD /* InstructionsLabel.swift in Sources */,
+				A86125D12B5F327600A00159 /* ToDosViewModel.swift in Sources */,
 				A8A1C90E2B2CF90400E08322 /* PersistedDiffableDataSource.swift in Sources */,
 				A84D115B2B45ACEC00C62AAF /* Router.swift in Sources */,
 				A8B9CE812B3E42C5007D903C /* PriorityLineView.swift in Sources */,

@@ -7,54 +7,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "CD817644-242D-45F6-A7B4-798EBEE6D802"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "DoIt2/View Controllers/ToDosViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "85"
-            endingLineNumber = "85"
-            landmarkName = "configureDataSource()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "CD817644-242D-45F6-A7B4-798EBEE6D802 - bda93a58ddef1090"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (__C.UITableView, Foundation.IndexPath, __C.NSManagedObjectID) -&gt; Swift.Optional&lt;__C.UITableViewCell&gt; in DoIt2.ToDosViewController.configureDataSource() -&gt; DoIt2.ToDosViewDataSource"
-                  moduleName = "DoIt2"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/nikitaivanov/IOSDevelopment/DoIt2/DoIt2/View%20Controllers/ToDosViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "83"
-                  endingLineNumber = "83"
-                  offsetFromSymbolStart = "736">
-               </Location>
-               <Location
-                  uuid = "CD817644-242D-45F6-A7B4-798EBEE6D802 - bda93a58ddef1090"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (__C.UITableView, Foundation.IndexPath, __C.NSManagedObjectID) -&gt; Swift.Optional&lt;__C.UITableViewCell&gt; in DoIt2.ToDosViewController.configureDataSource() -&gt; DoIt2.ToDosViewDataSource"
-                  moduleName = "DoIt2"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/nikitaivanov/IOSDevelopment/DoIt2/DoIt2/View%20Controllers/ToDosViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "83"
-                  endingLineNumber = "83"
-                  offsetFromSymbolStart = "260">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "DECABEAB-BF98-4473-A932-02159CC36E15"
             shouldBeEnabled = "No"
             ignoreCount = "0"
