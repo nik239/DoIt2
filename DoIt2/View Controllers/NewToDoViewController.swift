@@ -9,11 +9,10 @@ import UIKit
 import SnapKit
 
 final class NewToDoViewController: UIViewController {
-  let currentList: ToDoItemList
-  var toDoPriority: Int16 = 0
+  var model: NewToDoViewModel
   
   init(currentList: ToDoItemList){
-    self.currentList = currentList
+    self.model = NewToDoViewModel(currentList: currentList)
     super.init(nibName: nil, bundle: nil)
   }
   
@@ -93,16 +92,7 @@ final class NewToDoViewController: UIViewController {
   }()
   
   @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
-    switch sender.selectedSegmentIndex {
-    case 1:
-      toDoPriority = Priorities.low.rawValue
-    case 2:
-      toDoPriority = Priorities.medium.rawValue
-    case 3:
-      toDoPriority = Priorities.high.rawValue
-    default:
-      break
-    }
+    model.setPriority(sender: sender)
   }
 }
 
@@ -110,7 +100,7 @@ final class NewToDoViewController: UIViewController {
 extension NewToDoViewController: UITextFieldDelegate {
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     if let text = fldTitle.text, text != "" {
-      ToDoItem.createWith(taskDescription: text, list: currentList, priority: toDoPriority)
+      ToDoItem.createWith(taskDescription: text, list: model.currentList, priority: model.toDoPriority)
       fldTitle.text = ""
     }
     UIView.animate(withDuration: 0.3) {
