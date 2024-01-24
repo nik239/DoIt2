@@ -25,11 +25,17 @@ final class ToDosViewController: UITableViewController, UIViewControllerTransiti
   }
   
   private func setupUI() {
-    navigationItem.rightBarButtonItems = [editButtonItem, addButton]
+    navigationItem.rightBarButtonItems = [btnAdd, editButtonItem]
+    self.navigationItem.leftItemsSupplementBackButton = true
+    if let btnBack = navigationItem.leftBarButtonItems {
+      navigationItem.leftBarButtonItems = btnBack + [btnSort]
+    } else {
+      navigationItem.leftBarButtonItems = [btnSort]
+    }
     self.navigationItem.title = model.currentList.title
   }
   
-  private lazy var addButton: UIBarButtonItem = {
+  private lazy var btnAdd: UIBarButtonItem = {
     let btn = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
     return btn
   }()
@@ -37,6 +43,44 @@ final class ToDosViewController: UITableViewController, UIViewControllerTransiti
   @objc func addButtonTapped() {
     model.presentNewToDoView()
   }
+  
+  private lazy var pkrSort: UIPickerView = {
+    let pkr = UIPickerView()
+    pkr.delegate = self
+    pkr.dataSource = self
+    return pkr
+  }()
+  
+  private lazy var btnSort: UIBarButtonItem = {
+    let btn = UIBarButtonItem(title: "Sort", style: .bordered, target: self, action: #selector(presentSortSelector))
+    return btn
+  }()
+  
+  @objc func presentSortSelector() {present(alrtSelectSort, animated: true)}
+  
+  private lazy var alrtSelectSort: UIAlertController = {
+    let alrt = UIAlertController(
+      title: "Sort by:",
+      message: nil,
+      preferredStyle: .alert)
+    alrt.addTextField { fld in
+      fld.placeholder = self.model.sortSelection.current.rawValue
+      fld.borderStyle = .roundedRect
+      fld.inputView = self.pkrSort
+      fld.textAlignment = .center
+      fld.font = UIFont.boldSystemFont(ofSize: 20)
+      fld.tintColor = .clear
+    }
+    let sortAction = UIAlertAction(
+      title: "Apply",
+      style: .default
+    ) {[unowned self] _ in
+      self.model.dataSource!.toDosFetch.sort()
+    }
+    alrt.addAction(sortAction)
+    alrt.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+    return alrt
+  }()
 }
 
 //MARK: Life Cycle
@@ -87,6 +131,27 @@ extension ToDosViewController {
     completeAction.backgroundColor = UIColor.systemGreen
     let configuration = UISwipeActionsConfiguration(actions: [completeAction])
     return configuration
+  }
+}
+
+//MARK: PickerView
+extension ToDosViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+  func numberOfComponents(in pickerView: UIPickerView) -> Int {
+    return model.numberOfComponents
+  }
+  
+  func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    return model.numberOfSorts
+  }
+  
+  func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    return model.titleForSortRow(at: row)
+  }
+  
+  func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    let name = model.titleForSortRow(at: row)
+    model.updateSortSelection(to: name)
+    alrtSelectSort.textFields?.first?.placeholder = name
   }
 }
 

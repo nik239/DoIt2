@@ -13,6 +13,10 @@ struct ToDosViewModel {
   var tableView: UITableView?
   weak var delegate: ToDosViewControllerDelegate?
   
+  var sortSelection = ToDosSortPreference()
+  let numberOfSorts = ToDosSorts.allCases.count
+  let numberOfComponents = 1
+  
   mutating func configureDataSource() {
     dataSource = configuredDataSource()
   }
@@ -60,4 +64,11 @@ struct ToDosViewModel {
     completionHandler(true)
   }
   
+  func titleForSortRow(at index: Int) -> String {
+    return ToDosSorts.allCases[index].rawValue
+  }
+  
+  mutating func updateSortSelection(to name: String){
+    sortSelection.current = ToDosSorts(rawValue: name)!
+  }
 }

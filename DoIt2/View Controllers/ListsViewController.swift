@@ -13,7 +13,7 @@ final class ListsViewController: UITableViewController, UIViewControllerTransiti
   
   //MARK: UI
   private func setupUI() {
-    navigationItem.rightBarButtonItems = [editButtonItem, btnNewList]
+    navigationItem.rightBarButtonItems = [btnNewList, editButtonItem]
     navigationItem.leftBarButtonItem = btnSort
     self.navigationItem.title = "My Lists"
   }

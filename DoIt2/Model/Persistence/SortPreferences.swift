@@ -9,11 +9,11 @@ import Foundation
 
 //
 enum ToDosSorts: String, CaseIterable {
-  case dateNewest
-  case dateOldest
-//  case priorityHighest
-//  case priorityLowest
-  case custom
+  case dateNewest = "Date(Newest)"
+  case dateOldest = "Date(Oldest)"
+  case priorityHighest = "Priority(high to low)"
+  case priorityLowest = "Priority(low to high)"
+  case custom = "Custom"
 }
 
 enum ListsSorts: String, CaseIterable {

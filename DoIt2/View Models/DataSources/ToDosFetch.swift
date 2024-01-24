@@ -14,6 +14,8 @@ struct ToDosFetch {
   
   let dateNewestSort = NSSortDescriptor(key: #keyPath(ToDoItem.creationDate), ascending: false)
   let dateOldestSort = NSSortDescriptor(key: #keyPath(ToDoItem.creationDate), ascending: true)
+  let priorityHighestSort = NSSortDescriptor(key: #keyPath(ToDoItem.priority), ascending: false)
+  let priorityLowestSort = NSSortDescriptor(key: #keyPath(ToDoItem.priority), ascending: true)
   let customSort = NSSortDescriptor(key: #keyPath(ToDoItem.sortOrder), ascending: true)
   let completionSort = NSSortDescriptor(key: #keyPath(ToDoItem.isComplete), ascending: true)
   
@@ -42,6 +44,10 @@ struct ToDosFetch {
       fetchRequest.sortDescriptors = [completionSort, dateNewestSort]
     case .dateOldest:
       fetchRequest.sortDescriptors = [completionSort, dateOldestSort]
+    case .priorityHighest:
+      fetchRequest.sortDescriptors = [completionSort, priorityHighestSort]
+    case .priorityLowest:
+      fetchRequest.sortDescriptors = [completionSort, priorityLowestSort]
     case .custom:
       fetchRequest.sortDescriptors = [completionSort, customSort, dateNewestSort]
     }
