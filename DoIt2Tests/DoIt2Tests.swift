@@ -11,19 +11,19 @@ import XCTest
 final class NewToDoViewModelTests: XCTestCase {
   var mockList: ToDoItemList!
   var mockModel: NewToDoViewModel!
+  let persistenceManager = PersistenceManager(dataStack: TestCoreDataStack())
   
   override func setUpWithError() throws {
     // Put setup code here. This method is called before the invocation of each test method in the class.
     super.setUp()
-    mockList = ToDoItemList(context: PersistenceController.shared.context)
+    mockList = ToDoItemList(context: persistenceManager.dataStack.context)
     mockModel = NewToDoViewModel(currentList: mockList)
   }
   
   override func tearDownWithError() throws {
     // Put teardown code here. This method is called after the invocation of each test method in the class.
     super.tearDown()
-    PersistenceController.shared.context.delete(mockList)
-    try! PersistenceController.shared.context.save()
+    persistenceManager.delete(mockList)
     mockList = nil
     mockModel = nil
   }
