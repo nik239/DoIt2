@@ -60,7 +60,7 @@ struct ToDosViewModel {
       return
     }
     toDo.isComplete = true
-    PersistenceController.shared.saveContext()
+    //PersistenceController.shared.saveContext()
     completionHandler(true)
   }
   

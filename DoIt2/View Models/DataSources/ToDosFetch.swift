@@ -59,7 +59,7 @@ struct ToDosFetch {
     controller = makeFetchedResultsController(with: fetchRequest)
     do {
       try controller.performFetch()
-      PersistenceController.shared.saveContext()
+      //PersistenceController.shared.saveContext()
     } catch let error as NSError {
       print("Fetching error: \(error), \(error.userInfo)")
     }

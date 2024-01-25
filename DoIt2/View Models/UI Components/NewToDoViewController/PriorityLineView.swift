@@ -8,23 +8,6 @@
 import UIKit
 import SnapKit
 
-enum Priorities: Int16, CaseIterable {
-  case none, low, medium, high
-  
-  var color: UIColor {
-    switch self {
-    case .none:
-      return .gray
-    case .low:
-      return .green
-    case .medium:
-      return .yellow
-    case .high:
-      return .red
-    }
-  }
-}
-
 final class PriorityLineView: UIView {
   private let sgmntNone = UIView()
   private let sgmntLow = UIView()
