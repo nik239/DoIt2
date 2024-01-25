@@ -11,8 +11,8 @@ struct NewToDoViewModel {
   let currentList: ToDoItemList
   var toDoPriority: Int16 = 0
   
-  mutating func setPriority(sender: UISegmentedControl){
-    switch sender.selectedSegmentIndex {
+  mutating func setPriority(index: Int){
+    switch index {
     case 1:
       toDoPriority = Priorities.low.rawValue
     case 2:
@@ -20,7 +20,7 @@ struct NewToDoViewModel {
     case 3:
       toDoPriority = Priorities.high.rawValue
     default:
-      break
+      toDoPriority = Priorities.none.rawValue
     }
   }
 }

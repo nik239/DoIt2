@@ -92,7 +92,7 @@ final class NewToDoViewController: UIViewController {
   }()
   
   @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
-    model.setPriority(sender: sender)
+    model.setPriority(index: sender.selectedSegmentIndex)
   }
 }
 

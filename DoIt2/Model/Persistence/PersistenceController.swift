@@ -16,7 +16,7 @@ struct PersistenceController {
     container.viewContext
   }
   
-  init() {
+  private init() {
     container = NSPersistentContainer(name: "DoIt")
     container.loadPersistentStores { _, error in
       if let error = error as NSError? {
