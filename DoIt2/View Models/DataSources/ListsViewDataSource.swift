@@ -10,6 +10,7 @@ import CoreData
 
 final class ListsViewDataSource: UITableViewDiffableDataSource<String, NSManagedObjectID> {
   lazy var listsFetch = ListsFetch(dataSource: self)
+  var persistenceManager: PersistenceManager = PersistenceManager.shared
   
   //flag that prevents redundant/erroneous view updates
   private var changeIsUserDriven = false
@@ -36,7 +37,6 @@ final class ListsViewDataSource: UITableViewDiffableDataSource<String, NSManaged
     for (index, list) in lists.enumerated() {
       list.sortOrder = Int16(exactly:index)!
     }
-    PersistenceController.shared.saveContext()
   }
   
   override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -46,8 +46,7 @@ final class ListsViewDataSource: UITableViewDiffableDataSource<String, NSManaged
   override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
     if editingStyle == .delete {
       let listToDelete = listsFetch.controller.object(at: indexPath)
-      PersistenceController.shared.context.delete(listToDelete)
-      PersistenceController.shared.saveContext()
+      persistenceManager.delete(listToDelete)
     }
   }
 }
@@ -71,7 +70,7 @@ extension ListsViewDataSource: NSFetchedResultsControllerDelegate {
 // MARK: -Logging
 extension ListsViewDataSource {
   func printSnapshot(snapshot: NSDiffableDataSourceSnapshot<String, NSManagedObjectID>) {
-    let context = PersistenceController.shared.context
+    let context = persistenceManager.dataStack.context
     let itemIdentifiers = snapshot.itemIdentifiers
     for itemIdentifier in itemIdentifiers {
       do {

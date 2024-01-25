@@ -7,8 +7,8 @@
 
 import CoreData
 
-class DataManager {
-  static let shared = DataManager()
+class PersistenceManager {
+  static let shared = PersistenceManager()
   
   let dataStack: CoreDataStack
   

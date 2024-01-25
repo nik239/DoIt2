@@ -9,6 +9,7 @@ import CoreData
 
 struct ToDosFetch {
   let dataSource: ToDosViewDataSource
+  var persistenceManager: PersistenceManager = PersistenceManager.shared
   
   let currentList: ToDoItemList
   
@@ -30,7 +31,7 @@ struct ToDosFetch {
     let fetchRequest = getCurrentFetchRequest()
     let fetchedResultsController = NSFetchedResultsController(
       fetchRequest: fetchRequest,
-      managedObjectContext: PersistenceController.shared.context,
+      managedObjectContext: persistenceManager.dataStack.context,
       sectionNameKeyPath: #keyPath(ToDoItem.isComplete),
       cacheName: nil)
     fetchedResultsController.delegate = dataSource

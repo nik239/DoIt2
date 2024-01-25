@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import CoreData
 
 final class ListsViewController: UITableViewController, UIViewControllerTransitioningDelegate {
   lazy var model = ListsViewModel()

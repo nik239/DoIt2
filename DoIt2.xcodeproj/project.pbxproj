@@ -22,7 +22,7 @@
 		A86125DC2B60B65800A00159 /* NewToDoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86125DB2B60B65800A00159 /* NewToDoViewModel.swift */; };
 		A86125E42B61A54200A00159 /* DoIt2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86125E32B61A54200A00159 /* DoIt2Tests.swift */; };
 		A86125EC2B62082200A00159 /* Priorities.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86125EB2B62082200A00159 /* Priorities.swift */; };
-		A86125EF2B622A3F00A00159 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86125EE2B622A3F00A00159 /* DataManager.swift */; };
+		A86125EF2B622A3F00A00159 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86125EE2B622A3F00A00159 /* PersistenceManager.swift */; };
 		A86125F22B622CAF00A00159 /* TestCoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86125F02B622CA900A00159 /* TestCoreDataStack.swift */; };
 		A8614F442B27CD1F00DCC068 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = A8614F432B27CD1F00DCC068 /* SnapKit */; };
 		A8614F762B27CDA400DCC068 /* DoIt.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A8614F482B27CDA300DCC068 /* DoIt.xcdatamodeld */; };
@@ -83,7 +83,7 @@
 		A86125E12B61A54200A00159 /* DoIt2Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DoIt2Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A86125E32B61A54200A00159 /* DoIt2Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoIt2Tests.swift; sourceTree = "<group>"; };
 		A86125EB2B62082200A00159 /* Priorities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Priorities.swift; sourceTree = "<group>"; };
-		A86125EE2B622A3F00A00159 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		A86125EE2B622A3F00A00159 /* PersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
 		A86125F02B622CA900A00159 /* TestCoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCoreDataStack.swift; sourceTree = "<group>"; };
 		A8614F2B2B27CCF700DCC068 /* DoIt2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DoIt2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A8614F492B27CDA300DCC068 /* DoIt.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DoIt.xcdatamodel; sourceTree = "<group>"; };
@@ -223,7 +223,7 @@
 			isa = PBXGroup;
 			children = (
 				A8614F5B2B27CDA300DCC068 /* CoreDataStack.swift */,
-				A86125EE2B622A3F00A00159 /* DataManager.swift */,
+				A86125EE2B622A3F00A00159 /* PersistenceManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -477,7 +477,7 @@
 				A8A1C90E2B2CF90400E08322 /* PersistedDiffableDataSource.swift in Sources */,
 				A84D115B2B45ACEC00C62AAF /* Router.swift in Sources */,
 				A8B9CE812B3E42C5007D903C /* PriorityLineView.swift in Sources */,
-				A86125EF2B622A3F00A00159 /* DataManager.swift in Sources */,
+				A86125EF2B622A3F00A00159 /* PersistenceManager.swift in Sources */,
 				A84D115F2B45B2E000C62AAF /* AppDelegateRouter.swift in Sources */,
 				A84D11592B45ACDC00C62AAF /* Coordinator.swift in Sources */,
 				A8614F842B27CDA400DCC068 /* CoreDataStack.swift in Sources */,

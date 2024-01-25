@@ -11,6 +11,7 @@ import CoreData
 final class ToDosViewDataSource: UITableViewDiffableDataSource<String, NSManagedObjectID> {
   let currentList: ToDoItemList
   lazy var toDosFetch = ToDosFetch(dataSource: self, currentList: currentList)
+  var persistenceManager: PersistenceManager = PersistenceManager.shared
   
   //flag that prevents redundant/erroneous view updates
   private var changeIsUserDriven = false
@@ -49,7 +50,6 @@ final class ToDosViewDataSource: UITableViewDiffableDataSource<String, NSManaged
     for (index, list) in toDos.enumerated() {
       list.sortOrder = Int16(exactly:index)!
     }
-    PersistenceController.shared.saveContext()
   }
   
   override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -59,8 +59,7 @@ final class ToDosViewDataSource: UITableViewDiffableDataSource<String, NSManaged
   override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
     if editingStyle == .delete {
       let itemToDelete = toDosFetch.controller.object(at: indexPath)
-      PersistenceController.shared.context.delete(itemToDelete)
-      PersistenceController.shared.saveContext()
+      persistenceManager.delete(itemToDelete)
     }
   }
 }

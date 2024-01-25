@@ -37,18 +37,4 @@ extension ToDoItem {
   @NSManaged public var isComplete: Bool
   @NSManaged public var list: ToDoItemList
   @NSManaged public var sortOrder: Int16
-  
-  static func createWith(taskDescription: String,
-                         isComplete: Bool = false,
-                         list: ToDoItemList, priority: Int16 = 0) {
-    let toDo = ToDoItem(context: PersistenceController.shared.context)
-    try! PersistenceController.shared.context.obtainPermanentIDs(for: [toDo])
-    toDo.creationDate = .now
-    toDo.priority = priority 
-    toDo.taskDescription = taskDescription
-    toDo.isComplete = isComplete
-    toDo.list = list
-    toDo.sortOrder = 0
-    PersistenceController.shared.saveContext()
-  }
 }

@@ -11,20 +11,24 @@ struct ListsViewModel {
   var dataSource: ListsViewDataSource?
   var tableView: UITableView?
   weak var delegate: ListsViewControllerDelegate?
+  var persistenceManager: PersistenceManager = PersistenceManager.shared
   
   var sortSelection = ListsSortPreference()
   let numberOfSorts = ListsSorts.allCases.count
   let numberOfComponents = 1
   
   mutating func configureDataSource() {
-    dataSource =
+    dataSource = configuredDataSource()
+  }
+  
+  func configuredDataSource() -> ListsViewDataSource {
     ListsViewDataSource(tableView: tableView!) {
       tableView, indexPath, managedObjectID -> UITableViewCell? in
       let cell = tableView.dequeueReusableCell(
         withIdentifier:"\(ListCell.self)",
         for: indexPath) as! ListCell
       if let list = try?
-          PersistenceController.shared.context.existingObject(with: managedObjectID)
+          persistenceManager.dataStack.context.existingObject(with: managedObjectID)
           as? ToDoItemList {
         cell.lblTitle.text = list.title
         cell.lblNumberOfItems.text = "(\(list.toDos.count) items)"

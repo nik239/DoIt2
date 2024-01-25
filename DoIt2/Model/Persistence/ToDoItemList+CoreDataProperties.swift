@@ -19,14 +19,6 @@ extension ToDoItemList {
   @NSManaged public var creationDate: Date
   @NSManaged public var sortOrder: Int16
   @NSManaged public var sortItemsBy: String
-  
-  static func createWith(title: String) {
-    let list = ToDoItemList(context: PersistenceController.shared.context)
-    list.title = title
-    list.creationDate = .now
-    list.sortOrder = 0
-    PersistenceController.shared.saveContext()
-  }
 }
 
 // MARK: Generated accessors for toDos

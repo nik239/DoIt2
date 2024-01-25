@@ -9,6 +9,8 @@ import UIKit
 import SnapKit
 
 final class NewListViewController: UIViewController {
+  var persistenceManager: PersistenceManager = PersistenceManager.shared
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     setupUI()
@@ -57,7 +59,7 @@ extension NewListViewController: UITextFieldDelegate {
       textField.resignFirstResponder()
       return true
     }
-    ToDoItemList.createWith(title: text)
+    persistenceManager.createList(title: text)
     textField.resignFirstResponder()
     self.dismiss(animated: true)
     return true

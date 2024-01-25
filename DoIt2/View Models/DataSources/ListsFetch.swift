@@ -9,6 +9,7 @@ import CoreData
 
 struct ListsFetch {
   let dataSource: ListsViewDataSource
+  var persistenceManager: PersistenceManager = PersistenceManager.shared
   
   let dateNewestSort = NSSortDescriptor(key: #keyPath(ToDoItemList.creationDate), ascending: false)
   let dateOldestSort = NSSortDescriptor(key: #keyPath(ToDoItemList.creationDate), ascending: true)
@@ -25,7 +26,7 @@ struct ListsFetch {
     let fetchRequest = getCurrentFetchRequest()
     let fetchedResultsController = NSFetchedResultsController(
       fetchRequest: fetchRequest,
-      managedObjectContext: PersistenceController.shared.context,
+      managedObjectContext: persistenceManager.dataStack.context,
       sectionNameKeyPath: nil,
       cacheName: nil)
     fetchedResultsController.delegate = dataSource
@@ -52,7 +53,6 @@ struct ListsFetch {
     controller = makeFetchedResultsController(with: fetchRequest)
     do {
       try controller.performFetch()
-      PersistenceController.shared.saveContext()
     } catch let error as NSError {
       print("Fetching error: \(error), \(error.userInfo)")
     }

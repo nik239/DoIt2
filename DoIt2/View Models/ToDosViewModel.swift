@@ -12,6 +12,7 @@ struct ToDosViewModel {
   var currentList: ToDoItemList
   var tableView: UITableView?
   weak var delegate: ToDosViewControllerDelegate?
+  var persistenceManager: PersistenceManager = PersistenceManager.shared
   
   var sortSelection = ToDosSortPreference()
   let numberOfSorts = ToDosSorts.allCases.count
@@ -28,7 +29,7 @@ struct ToDosViewModel {
         print("temporary ID!")
       }
       if let toDo = try?
-          PersistenceController.shared.context.existingObject(with: managedObjectID) as? ToDoItem {
+          persistenceManager.dataStack.context.existingObject(with: managedObjectID) as? ToDoItem {
         let id = "\(ToDoItemCell.self)" + sectionTitle(isComplete: toDo.isComplete)
         let cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath) as! ToDoItemCell
         cell.lblDescription.text = toDo.taskDescription
