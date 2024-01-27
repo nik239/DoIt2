@@ -5,5 +5,5 @@ Here're some of the things I was able to implement in it:
    - Clean, efficient fetching with NSFetchedResultsController
    - Table views driven by NSManagedObjectContext, through a combination of NSFetchedResultsController and a custom diffable data source
 3) Unit tests and snapshot tests
-   - Efficient testing of CoreData-dependent objects, by using a TestCoreDataStack for in-memory storage
+   - Efficient testing of CoreData-dependent entities, by using a CoreDataStack subclass for in-memory storage
 4) A fully programmatic UI with SnapKit (no Soryboards)
