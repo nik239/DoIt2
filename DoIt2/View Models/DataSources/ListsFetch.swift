@@ -23,7 +23,6 @@ struct ListsFetch {
   }()
   
   private func makeFetchedResultsController(with fetchRequest: NSFetchRequest<ToDoItemList>) -> NSFetchedResultsController<ToDoItemList> {
-    let fetchRequest = getCurrentFetchRequest()
     let fetchedResultsController = NSFetchedResultsController(
       fetchRequest: fetchRequest,
       managedObjectContext: persistenceManager.dataStack.context,

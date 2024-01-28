@@ -16,17 +16,21 @@ class PersistenceManager {
     self.dataStack = dataStack
   }
   
-  func createList(title: String){
+  @discardableResult
+  func createList(title: String) -> ToDoItemList {
     let list = ToDoItemList(context: dataStack.context)
     list.title = title
     list.creationDate = .now
     list.sortOrder = 0
     dataStack.saveContext()
+    return list
   }
   
+  @discardableResult
   func createToDoItem(taskDescription: String,
                       isComplete: Bool = false,
-                      list: ToDoItemList, priority: Int16 = 0) {
+                      list: ToDoItemList, priority: Int16 = 0)
+                      -> ToDoItem {
     let toDo = ToDoItem(context: dataStack.context)
     try! dataStack.context.obtainPermanentIDs(for: [toDo])
     toDo.creationDate = .now
@@ -36,6 +40,7 @@ class PersistenceManager {
     toDo.list = list
     toDo.sortOrder = 0
     dataStack.saveContext()
+    return toDo
   }
   
   func delete(_ entity: NSManagedObject){

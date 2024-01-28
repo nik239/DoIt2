@@ -28,7 +28,6 @@ struct ToDosFetch {
   }()
   
   private func makeFetchedResultsController(with fetchRequest: NSFetchRequest<ToDoItem>) -> NSFetchedResultsController<ToDoItem> {
-    let fetchRequest = getCurrentFetchRequest()
     let fetchedResultsController = NSFetchedResultsController(
       fetchRequest: fetchRequest,
       managedObjectContext: persistenceManager.dataStack.context,
@@ -60,7 +59,6 @@ struct ToDosFetch {
     controller = makeFetchedResultsController(with: fetchRequest)
     do {
       try controller.performFetch()
-      //PersistenceController.shared.saveContext()
     } catch let error as NSError {
       print("Fetching error: \(error), \(error.userInfo)")
     }
