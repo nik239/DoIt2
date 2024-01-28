@@ -9,6 +9,7 @@ import UIKit
 
 final class ListsViewController: UITableViewController, UIViewControllerTransitioningDelegate {
   lazy var model = ListsViewModel()
+  weak var delegate: ListsViewControllerDelegate?
   
   //MARK: UI
   private func setupUI() {
@@ -61,7 +62,7 @@ final class ListsViewController: UITableViewController, UIViewControllerTransiti
   }()
   
   @objc func didPressAdd() {
-    model.presentNewListView()
+    delegate!.listsViewControllerDidPressAdd()
   }
 }
 
@@ -91,7 +92,7 @@ extension ListsViewController {
   }
   
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    model.viewList(at: indexPath)
+    model.viewList(at: indexPath, with: delegate)
   }
 }
 

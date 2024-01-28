@@ -10,7 +10,6 @@ import UIKit
 struct ListsViewModel {
   var dataSource: ListsViewDataSource?
   var tableView: UITableView?
-  weak var delegate: ListsViewControllerDelegate?
   var persistenceManager: PersistenceManager = PersistenceManager.shared
   
   var sortSelection = ListsSortPreference()
@@ -37,11 +36,7 @@ struct ListsViewModel {
     }
   }
   
-  func presentNewListView() {
-    delegate!.listsViewControllerDidPressAdd()
-  }
-  
-  func viewList(at indexPath: IndexPath) {
+  func viewList(at indexPath: IndexPath, with delegate: ListsViewControllerDelegate?) {
     let list = dataSource!.listsFetch.controller.object(at: indexPath)
     delegate!.listsViewControllerDidSelectList(list: list)
   }

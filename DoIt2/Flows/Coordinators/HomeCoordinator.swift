@@ -8,22 +8,18 @@
 import UIKit
 
 final class HomeCoordinator: Coordinator {
-
-  // MARK: - Instance Properties
   var children: [Coordinator] = []
   let router: Router
   let navigationController = UINavigationController()
 
-  // MARK: - Object Lifecycle
   init(router: Router) {
     self.router = router
   }
 
-  // MARK: - Instance Methods
   func present(animated: Bool,
                       onDismissed: (() -> Void)?) {
     let listsViewController = ListsViewController()
-    listsViewController.model.delegate = self
+    listsViewController.delegate = self
     navigationController.setViewControllers([listsViewController], animated: false)
     router.present(navigationController,
                    animated: animated,

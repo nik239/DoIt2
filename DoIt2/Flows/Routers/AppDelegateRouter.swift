@@ -8,11 +8,8 @@
 import UIKit
 
 class AppDelegateRouter: Router {
-  
-  // MARK: - Instance Properties
   let window: UIWindow
   
-  // MARK: - Object Lifecycle
   init(window: UIWindow) {
     self.window = window
   }

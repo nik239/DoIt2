@@ -11,7 +11,6 @@ struct ToDosViewModel {
   var dataSource: ToDosViewDataSource?
   var currentList: ToDoItemList
   var tableView: UITableView?
-  weak var delegate: ToDosViewControllerDelegate?
   var persistenceManager: PersistenceManager = PersistenceManager.shared
   
   var sortSelection = ToDosSortPreference()
@@ -42,10 +41,6 @@ struct ToDosViewModel {
     }
   }
   
-  func presentNewToDoView(){
-    delegate!.toDosViewControllerDidPressAdd(currentList: currentList)
-  }
-  
   func sectionTitle(for section: Int) -> String {
     return sectionTitle(isComplete: (section == 1))
   }
@@ -55,13 +50,16 @@ struct ToDosViewModel {
   }
   
   func markAsComplete(indexPath: IndexPath, completionHandler: (Bool) -> Void){
-    let toDo = dataSource!.toDosFetch.controller.object(at: indexPath)
+    guard let dataSource = dataSource else {
+      assertionFailure("ToDos Data source nil")
+      return
+    }
+    let toDo = dataSource.toDosFetch.controller.object(at: indexPath)
     if toDo.isComplete {
       completionHandler(false)
       return
     }
     toDo.isComplete = true
-    //PersistenceController.shared.saveContext()
     completionHandler(true)
   }
   
@@ -70,6 +68,10 @@ struct ToDosViewModel {
   }
   
   mutating func updateSortSelection(to name: String){
-    sortSelection.current = ToDosSorts(rawValue: name)!
+    guard let currentSelection = ToDosSorts(rawValue: name) else {
+      assertionFailure("Couldn't initialize a ToDosSorts object")
+      return
+    }
+    sortSelection.current = currentSelection
   }
 }

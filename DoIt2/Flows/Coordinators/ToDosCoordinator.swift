@@ -8,19 +8,18 @@
 import UIKit
 
 final class ToDosCoordinator: Coordinator {
-  // MARK: - Instance Properties
   var children: [Coordinator] = []
   let router: Router
   let list: ToDoItemList
   let viewController: ToDosViewController
 
-  // MARK: - Object Lifecycle
   init(router: Router, list: ToDoItemList) {
     self.list = list
     self.router = router
     self.viewController = ToDosViewController(style: .plain, currentList: list)
-    viewController.model.delegate = self
+    viewController.delegate = self
   }
+  
   func present(animated: Bool,
                onDismissed: (() -> Void)?){
     router.present(viewController, animated: animated)

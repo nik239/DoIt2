@@ -42,7 +42,7 @@ final class ToDosViewController: UITableViewController, UIViewControllerTransiti
   }()
   
   @objc func addButtonTapped() {
-    model.presentNewToDoView()
+    delegate!.toDosViewControllerDidPressAdd(currentList: model.currentList)
   }
   
   private lazy var pkrSort: UIPickerView = {
