@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "9BC93CD1-2AE2-4901-B27E-7A3E3B68E2B0",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:DoIt2.xcodeproj",
+        "identifier" : "A86125E02B61A54200A00159",
+        "name" : "DoIt2Tests"
+      }
+    }
+  ],
+  "version" : 1
+}
