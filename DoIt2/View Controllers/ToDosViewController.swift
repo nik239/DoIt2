@@ -13,7 +13,7 @@ enum Sections: String, CaseIterable {
 }
 
 final class ToDosViewController: UITableViewController, UIViewControllerTransitioningDelegate {
-  var model: ToDosViewModel
+  private let model: ToDosViewModel
   weak var delegate: ToDosViewControllerDelegate?
   
   init(style: UITableView.Style, currentList: ToDoItemList) {

@@ -9,11 +9,13 @@ import UIKit
 import SnapKit
 
 final class NewToDoViewController: UIViewController {
-  var model: NewToDoViewModel
+  private let model: NewToDoViewModel
+  private let currentList: ToDoItemList
   var persistenceManager: PersistenceManager = PersistenceManager.shared
   
   init(currentList: ToDoItemList){
-    self.model = NewToDoViewModel(currentList: currentList)
+    self.model = NewToDoViewModel()
+    self.currentList = currentList
     super.init(nibName: nil, bundle: nil)
   }
   
@@ -101,7 +103,7 @@ final class NewToDoViewController: UIViewController {
 extension NewToDoViewController: UITextFieldDelegate {
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     if let text = fldTitle.text, text != "" {
-      persistenceManager.createToDoItem(taskDescription: text, list: model.currentList, priority: model.toDoPriority)
+      persistenceManager.createToDoItem(taskDescription: text, list: currentList, priority: model.toDoPriority)
       fldTitle.text = ""
     }
     UIView.animate(withDuration: 0.3) {

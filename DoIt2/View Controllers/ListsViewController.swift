@@ -8,7 +8,7 @@
 import UIKit
 
 final class ListsViewController: UITableViewController, UIViewControllerTransitioningDelegate {
-  lazy var model = ListsViewModel()
+  private let model = ListsViewModel()
   weak var delegate: ListsViewControllerDelegate?
   
   //MARK: UI

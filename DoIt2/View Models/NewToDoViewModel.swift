@@ -7,11 +7,10 @@
 
 import UIKit
 
-struct NewToDoViewModel {
-  let currentList: ToDoItemList
+final class NewToDoViewModel {
   var toDoPriority: Int16 = 0
   
-  mutating func setPriority(index: Int){
+  func setPriority(index: Int){
     switch index {
     case 1:
       toDoPriority = Priorities.low.rawValue

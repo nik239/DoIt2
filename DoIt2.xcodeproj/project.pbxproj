@@ -327,8 +327,8 @@
 		A8614F6F2B27CDA400DCC068 /* View Models */ = {
 			isa = PBXGroup;
 			children = (
-				A86125D02B5F327600A00159 /* ToDosViewModel.swift */,
 				A86125D72B5F729800A00159 /* ListsViewModel.swift */,
+				A86125D02B5F327600A00159 /* ToDosViewModel.swift */,
 				A86125DB2B60B65800A00159 /* NewToDoViewModel.swift */,
 				A86125D32B5F56DE00A00159 /* DataSources */,
 				A8614F502B27CDA300DCC068 /* Cells */,
