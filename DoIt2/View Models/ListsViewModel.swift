@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct ListsViewModel {
+final class ListsViewModel {
   var dataSource: ListsViewDataSource?
   var tableView: UITableView?
   var persistenceManager: PersistenceManager = PersistenceManager.shared
@@ -16,33 +16,30 @@ struct ListsViewModel {
   let numberOfSorts = ListsSorts.allCases.count
   let numberOfComponents = 1
   
-  mutating func configureDataSource() {
-    dataSource = configuredDataSource()
-  }
-  
-  func configuredDataSource() -> ListsViewDataSource? {
+  func configureDataSource() {
     guard let tableView = tableView else {
       assertionFailure("ListsViewModel tableView is nil")
-      return nil
+      return
     }
-    let dataSource = ListsViewDataSource(tableView: tableView) {
+    self.dataSource = ListsViewDataSource(tableView: tableView) {
       tableView, indexPath, managedObjectID -> UITableViewCell? in
       let cell = tableView.dequeueReusableCell(
         withIdentifier:"\(ListCell.self)",
         for: indexPath)
-      if let listCell = cell as? ListCell {
-        if let list = try?
-            persistenceManager.dataStack.context.existingObject(with: managedObjectID)
-            as? ToDoItemList {
-          listCell.lblTitle.text = list.title
-          listCell.lblNumberOfItems.text = "(\(list.toDos.count) items)"
-        }
-        return listCell
-      } else {
+      guard let listCell = cell as? ListCell else {
+        assertionFailure("Couldn't cast cell to ListCell")
         return cell
       }
+      guard let list = try?
+          self.persistenceManager.dataStack.context.existingObject(with: managedObjectID)
+              as? ToDoItemList else {
+        assertionFailure("Failed to fetch list")
+        return listCell
+      }
+      listCell.lblTitle.text = list.title
+      listCell.lblNumberOfItems.text = "(\(list.toDos.count) items)"
+      return listCell
     }
-    return dataSource
   }
   
   func viewList(at indexPath: IndexPath, with delegate: ListsViewControllerDelegate?) {
@@ -62,7 +59,7 @@ struct ListsViewModel {
       return ListsSorts.allCases[index].rawValue
   }
   
-  mutating func updateSortSelection(to name: String){
+  func updateSortSelection(to name: String){
     guard let listsSort = ListsSorts(rawValue: name) else {
       assertionFailure("Couldn't init listsSort")
       return

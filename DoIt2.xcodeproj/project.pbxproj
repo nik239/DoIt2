@@ -50,7 +50,6 @@
 		A87097AC2B474ECF00297205 /* NewListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87097AB2B474ECF00297205 /* NewListCoordinator.swift */; };
 		A87097AE2B4764C700297205 /* NewToDoCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87097AD2B4764C700297205 /* NewToDoCoordinator.swift */; };
 		A876E1E82B48B71C00C790B6 /* PriorityControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A876E1E72B48B71C00C790B6 /* PriorityControl.swift */; };
-		A8A1C90E2B2CF90400E08322 /* PersistedDiffableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A1C90D2B2CF90400E08322 /* PersistedDiffableDataSource.swift */; };
 		A8A1C9142B2D3EE500E08322 /* SortPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A1C9132B2D3EE500E08322 /* SortPreferences.swift */; };
 		A8B9CE812B3E42C5007D903C /* PriorityLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B9CE802B3E42C5007D903C /* PriorityLineView.swift */; };
 		A8E1FFB52B62D35900D60EA4 /* ToDosViewDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E1FFB42B62D35900D60EA4 /* ToDosViewDataSourceTests.swift */; };
@@ -124,7 +123,6 @@
 		A87097AB2B474ECF00297205 /* NewListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewListCoordinator.swift; sourceTree = "<group>"; };
 		A87097AD2B4764C700297205 /* NewToDoCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewToDoCoordinator.swift; sourceTree = "<group>"; };
 		A876E1E72B48B71C00C790B6 /* PriorityControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityControl.swift; sourceTree = "<group>"; };
-		A8A1C90D2B2CF90400E08322 /* PersistedDiffableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistedDiffableDataSource.swift; sourceTree = "<group>"; };
 		A8A1C9132B2D3EE500E08322 /* SortPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortPreferences.swift; sourceTree = "<group>"; };
 		A8B9CE802B3E42C5007D903C /* PriorityLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityLineView.swift; sourceTree = "<group>"; };
 		A8E1FFB42B62D35900D60EA4 /* ToDosViewDataSourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDosViewDataSourceTests.swift; sourceTree = "<group>"; };
@@ -219,7 +217,6 @@
 				A8614F702B27CDA400DCC068 /* ToDosViewDataSource.swift */,
 				A86125D42B5F576100A00159 /* ToDosFetch.swift */,
 				A8F338E42B2BA1E000B18EB9 /* ListsViewDataSource.swift */,
-				A8A1C90D2B2CF90400E08322 /* PersistedDiffableDataSource.swift */,
 				A86125D92B5F91C300A00159 /* ListsFetch.swift */,
 			);
 			path = DataSources;
@@ -546,7 +543,6 @@
 				A8614F972B27CDA400DCC068 /* ToDosViewDataSource.swift in Sources */,
 				A84B0CBA2B4474AE00D92BAD /* InstructionsLabel.swift in Sources */,
 				A86125D12B5F327600A00159 /* ToDosViewModel.swift in Sources */,
-				A8A1C90E2B2CF90400E08322 /* PersistedDiffableDataSource.swift in Sources */,
 				A84D115B2B45ACEC00C62AAF /* Router.swift in Sources */,
 				A8B9CE812B3E42C5007D903C /* PriorityLineView.swift in Sources */,
 				A86125EF2B622A3F00A00159 /* PersistenceManager.swift in Sources */,

@@ -7,53 +7,51 @@
 
 import UIKit
 
-struct ToDosViewModel {
-  var dataSource: ToDosViewDataSource?
+final class ToDosViewModel {
   var currentList: ToDoItemList
+  
+  var dataSource: ToDosViewDataSource?
   var tableView: UITableView?
-  var persistenceManager: PersistenceManager = PersistenceManager.shared
+  var persistenceManager: PersistenceManager
   
   var sortSelection = ToDosSortPreference()
   let numberOfSorts = ToDosSorts.allCases.count
   let numberOfComponents = 1
   
-  mutating func configureDataSource() {
-    dataSource = configuredDataSource()
+  init(currentList: ToDoItemList, persistenceManager: PersistenceManager = PersistenceManager.shared){
+    self.currentList = currentList
+    self.persistenceManager = persistenceManager
   }
   
-  func configuredDataSource() -> ToDosViewDataSource? {
+  func configureDataSource() {
     guard let tableView = tableView else {
       assertionFailure("ToDosViewModel tableView is nil")
-      return nil
+      return
     }
-    let dataSource = ToDosViewDataSource(currentList: currentList, tableView: tableView) {
+    self.dataSource = ToDosViewDataSource(currentList: currentList, tableView: tableView) {
       tableView, indexPath, managedObjectID -> UITableViewCell? in
-      if managedObjectID.isTemporaryID {
-        print("temporary ID!")
+      guard let toDo = try?
+              self.persistenceManager.dataStack.context.existingObject(with: managedObjectID)
+              as? ToDoItem else {
+        assertionFailure("Failed to fetch the toDo")
+        return nil
       }
-      if let toDo = try?
-          persistenceManager.dataStack.context.existingObject(with: managedObjectID) as? ToDoItem {
-        let id = "\(ToDoItemCell.self)" + sectionTitle(isComplete: toDo.isComplete)
-        let cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath)
-        if let toDoCell = cell as? ToDoItemCell {
-          toDoCell.lblDescription.text = toDo.taskDescription
-          if !toDo.isComplete {
-            if let priority = Priorities(rawValue: toDo.priority) {
-              toDoCell.imgvPriority.tintColor = Priorities(rawValue: toDo.priority)!.color
-            } else {
-              assertionFailure("toDo has invalid priority")
-            }
-          }
-          return toDoCell
+      let id = "\(ToDoItemCell.self)" + self.sectionTitle(isComplete: toDo.isComplete)
+      let cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath)
+      guard let toDoCell = cell as? ToDoItemCell else {
+        assertionFailure("Couldn't cast cell to ToDoItemCell")
+        return cell
+      }
+      toDoCell.lblDescription.text = toDo.taskDescription
+      if !toDo.isComplete {
+        if let priority = Priorities(rawValue: toDo.priority) {
+          toDoCell.imgvPriority.tintColor = Priorities(rawValue: toDo.priority)!.color
         } else {
-          assertionFailure("Couldn't cast cell to ToDoItemCell")
-          return cell
+          assertionFailure("toDo has invalid priority")
         }
       }
-      return nil
+      return toDoCell
     }
-    
-    return dataSource
   }
   
   func sectionTitle(for section: Int) -> String {
@@ -82,7 +80,7 @@ struct ToDosViewModel {
     return ToDosSorts.allCases[index].rawValue
   }
   
-  mutating func updateSortSelection(to name: String){
+  func updateSortSelection(to name: String){
     guard let currentSelection = ToDosSorts(rawValue: name) else {
       assertionFailure("Couldn't initialize a ToDosSorts object")
       return
