@@ -21,8 +21,12 @@ struct ToDosViewModel {
     dataSource = configuredDataSource()
   }
   
-  func configuredDataSource() -> ToDosViewDataSource {
-    ToDosViewDataSource(currentList: currentList, tableView: tableView!) {
+  func configuredDataSource() -> ToDosViewDataSource? {
+    guard let tableView = tableView else {
+      assertionFailure("ToDosViewModel tableView is nil")
+      return nil
+    }
+    let dataSource = ToDosViewDataSource(currentList: currentList, tableView: tableView) {
       tableView, indexPath, managedObjectID -> UITableViewCell? in
       if managedObjectID.isTemporaryID {
         print("temporary ID!")
@@ -30,15 +34,26 @@ struct ToDosViewModel {
       if let toDo = try?
           persistenceManager.dataStack.context.existingObject(with: managedObjectID) as? ToDoItem {
         let id = "\(ToDoItemCell.self)" + sectionTitle(isComplete: toDo.isComplete)
-        let cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath) as! ToDoItemCell
-        cell.lblDescription.text = toDo.taskDescription
-        if !toDo.isComplete {
-          cell.imgvPriority.tintColor = Priorities(rawValue: toDo.priority)!.color
+        let cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath)
+        if let toDoCell = cell as? ToDoItemCell {
+          toDoCell.lblDescription.text = toDo.taskDescription
+          if !toDo.isComplete {
+            if let priority = Priorities(rawValue: toDo.priority) {
+              toDoCell.imgvPriority.tintColor = Priorities(rawValue: toDo.priority)!.color
+            } else {
+              assertionFailure("toDo has invalid priority")
+            }
+          }
+          return toDoCell
+        } else {
+          assertionFailure("Couldn't cast cell to ToDoItemCell")
+          return cell
         }
-        return cell
       }
       return nil
     }
+    
+    return dataSource
   }
   
   func sectionTitle(for section: Int) -> String {

@@ -49,7 +49,11 @@ final class ListsViewController: UITableViewController, UIViewControllerTransiti
       title: "Apply",
       style: .default
     ) {[unowned self] _ in
-      self.model.dataSource!.listsFetch.sort()
+      guard let dataSource = model.dataSource else {
+        assertionFailure("dataSource is nil")
+        return
+      }
+      dataSource.listsFetch.sort()
     }
     alrt.addAction(sortAction)
     alrt.addAction(UIAlertAction(title: "Cancel", style: .cancel))
@@ -62,7 +66,11 @@ final class ListsViewController: UITableViewController, UIViewControllerTransiti
   }()
   
   @objc func didPressAdd() {
-    delegate!.listsViewControllerDidPressAdd()
+    guard let delegate = delegate else {
+      assertionFailure("Delegate is nil")
+      return
+    }
+    delegate.listsViewControllerDidPressAdd()
   }
 }
 
@@ -78,7 +86,11 @@ extension ListsViewController {
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     UIView.performWithoutAnimation {
-      model.dataSource!.loadData()
+      guard let dataSource = model.dataSource else {
+        assertionFailure("dataSource is nil")
+        return
+      }
+      dataSource.loadData()
     }
   }
 }

@@ -115,7 +115,7 @@
 		A8614F6D2B27CDA300DCC068 /* ListsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListsViewController.swift; sourceTree = "<group>"; };
 		A8614F702B27CDA400DCC068 /* ToDosViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToDosViewDataSource.swift; sourceTree = "<group>"; };
 		A8614F712B27CDA400DCC068 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
-		A8614F9E2B27D6A600DCC068 /* DoIt2-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DoIt2-Bridging-Header.h"; sourceTree = "<group>"; };
+		A865BEEE2B6A2C1E007A49CB /* DoIt2-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DoIt2-Bridging-Header.h"; sourceTree = "<group>"; };
 		A86B82B32B48A72900E24353 /* TitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleLabel.swift; sourceTree = "<group>"; };
 		A86B82B52B48A78F00E24353 /* TitleStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleStackView.swift; sourceTree = "<group>"; };
 		A86B82B72B48AAF400E24353 /* TitleField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleField.swift; sourceTree = "<group>"; };
@@ -286,8 +286,8 @@
 				A86125D62B5F594800A00159 /* Model */,
 				A8614F5F2B27CDA300DCC068 /* AppDelegate.swift */,
 				A8614F4A2B27CDA300DCC068 /* Assets.xcassets */,
+				A865BEEE2B6A2C1E007A49CB /* DoIt2-Bridging-Header.h */,
 				A8614F712B27CDA400DCC068 /* LaunchScreen.storyboard */,
-				A8614F9E2B27D6A600DCC068 /* DoIt2-Bridging-Header.h */,
 				A8614F4B2B27CDA300DCC068 /* Info.plist */,
 			);
 			path = DoIt2;

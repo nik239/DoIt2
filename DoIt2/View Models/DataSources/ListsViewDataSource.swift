@@ -30,12 +30,19 @@ final class ListsViewDataSource: UITableViewDiffableDataSource<String, NSManaged
   
   override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
     changeIsUserDriven = true
-    var lists = listsFetch.controller.fetchedObjects!
+    guard var lists = listsFetch.controller.fetchedObjects else {
+      assertionFailure("Couldn't fetch lists")
+      return
+    }
     let list = lists[sourceIndexPath.row]
     lists.remove(at: sourceIndexPath.row)
     lists.insert(list, at: destinationIndexPath.row)
     for (index, list) in lists.enumerated() {
-      list.sortOrder = Int16(exactly:index)!
+      guard let newSortOrder = Int16(exactly: index) else {
+        assertionFailure("Couldn't case newSortOrder to Int16")
+        return
+      }
+      list.sortOrder = newSortOrder
     }
   }
   

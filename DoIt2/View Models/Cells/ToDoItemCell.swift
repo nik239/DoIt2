@@ -48,7 +48,6 @@ extension ToDoItemCell {
       make.leading.equalToSuperview().inset(15)
       make.centerY.equalToSuperview()
       make.trailing.equalTo(imgvPriority)
-//      make.leading.trailing.equalToSuperview().inset(15).labeled("label-cell horizontal")
       make.top.bottom.equalToSuperview().inset(15).labeled("label-cell vertical")
     }
   }

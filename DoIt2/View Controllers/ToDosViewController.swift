@@ -42,7 +42,11 @@ final class ToDosViewController: UITableViewController, UIViewControllerTransiti
   }()
   
   @objc func addButtonTapped() {
-    delegate!.toDosViewControllerDidPressAdd(currentList: model.currentList)
+    guard let delegate = delegate else {
+      assertionFailure("Delegate is nil")
+      return
+    }
+    delegate.toDosViewControllerDidPressAdd(currentList: model.currentList)
   }
   
   private lazy var pkrSort: UIPickerView = {
@@ -76,7 +80,11 @@ final class ToDosViewController: UITableViewController, UIViewControllerTransiti
       title: "Apply",
       style: .default
     ) {[unowned self] _ in
-      self.model.dataSource!.toDosFetch.sort()
+      guard let dataSource = model.dataSource else {
+        assertionFailure("dataSource is nil")
+        return
+      }
+      dataSource.toDosFetch.sort()
     }
     alrt.addAction(sortAction)
     alrt.addAction(UIAlertAction(title: "Cancel", style: .cancel))
@@ -96,7 +104,11 @@ extension ToDosViewController {
   override func viewIsAppearing(_ animated: Bool) {
     super.viewIsAppearing(animated)
     UIView.performWithoutAnimation {
-      model.dataSource!.loadData()
+      guard let dataSource = model.dataSource else {
+        assertionFailure("dataSource is nil")
+        return
+      }
+      dataSource.loadData()
     }
   }
 }
@@ -127,7 +139,11 @@ extension ToDosViewController {
   override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
     let completeAction = UIContextualAction(style: .normal, title: "Done!") {
       [weak self] (action, view, completionHandler) in
-      self!.model.markAsComplete(indexPath: indexPath, completionHandler: completionHandler)
+      guard let self = self else {
+        assertionFailure("Reference to ToDosViewController is nil")
+        return
+      }
+      self.model.markAsComplete(indexPath: indexPath, completionHandler: completionHandler)
     }
     completeAction.backgroundColor = UIColor.systemGreen
     let configuration = UISwipeActionsConfiguration(actions: [completeAction])

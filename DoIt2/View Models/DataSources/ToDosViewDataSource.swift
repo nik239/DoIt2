@@ -43,12 +43,19 @@ final class ToDosViewDataSource: UITableViewDiffableDataSource<String, NSManaged
       return
     }
     changeIsUserDriven = true
-    var toDos = toDosFetch.controller.fetchedObjects!
+    guard var toDos = toDosFetch.controller.fetchedObjects else {
+      assertionFailure("Couldn't fetch toDos")
+      return
+    }
     let toDo = toDos[sourceIndexPath.row]
     toDos.remove(at: sourceIndexPath.row)
     toDos.insert(toDo, at: destinationIndexPath.row)
     for (index, list) in toDos.enumerated() {
-      list.sortOrder = Int16(exactly:index)!
+      guard let newSortOrder = Int16(exactly:index) else {
+        assertionFailure("Couldn't cast sortOrder to Int16")
+        return
+      }
+      list.sortOrder = newSortOrder
     }
   }
   

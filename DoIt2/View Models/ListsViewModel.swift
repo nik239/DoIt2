@@ -20,25 +20,42 @@ struct ListsViewModel {
     dataSource = configuredDataSource()
   }
   
-  func configuredDataSource() -> ListsViewDataSource {
-    ListsViewDataSource(tableView: tableView!) {
+  func configuredDataSource() -> ListsViewDataSource? {
+    guard let tableView = tableView else {
+      assertionFailure("ListsViewModel tableView is nil")
+      return nil
+    }
+    let dataSource = ListsViewDataSource(tableView: tableView) {
       tableView, indexPath, managedObjectID -> UITableViewCell? in
       let cell = tableView.dequeueReusableCell(
         withIdentifier:"\(ListCell.self)",
-        for: indexPath) as! ListCell
-      if let list = try?
-          persistenceManager.dataStack.context.existingObject(with: managedObjectID)
-          as? ToDoItemList {
-        cell.lblTitle.text = list.title
-        cell.lblNumberOfItems.text = "(\(list.toDos.count) items)"
+        for: indexPath)
+      if let listCell = cell as? ListCell {
+        if let list = try?
+            persistenceManager.dataStack.context.existingObject(with: managedObjectID)
+            as? ToDoItemList {
+          listCell.lblTitle.text = list.title
+          listCell.lblNumberOfItems.text = "(\(list.toDos.count) items)"
+        }
+        return listCell
+      } else {
+        return cell
       }
-      return cell
     }
+    return dataSource
   }
   
   func viewList(at indexPath: IndexPath, with delegate: ListsViewControllerDelegate?) {
-    let list = dataSource!.listsFetch.controller.object(at: indexPath)
-    delegate!.listsViewControllerDidSelectList(list: list)
+    guard let dataSource = dataSource else {
+      assertionFailure("ListsViewMOdel dataSource is nil")
+      return
+    }
+    let list = dataSource.listsFetch.controller.object(at: indexPath)
+    guard let delegate = delegate else {
+      assertionFailure("ListsView delegate is nil")
+      return
+    }
+    delegate.listsViewControllerDidSelectList(list: list)
   }
   
   func titleForSortRow(at index: Int) -> String {
@@ -46,7 +63,11 @@ struct ListsViewModel {
   }
   
   mutating func updateSortSelection(to name: String){
-    sortSelection.current = ListsSorts(rawValue: name)!
+    guard let listsSort = ListsSorts(rawValue: name) else {
+      assertionFailure("Couldn't init listsSort")
+      return
+    }
+    sortSelection.current = listsSort
   }
 }
 
