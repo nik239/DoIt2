@@ -22,6 +22,7 @@ final class ListsFetchTests: XCTestCase {
   
   override func setUpWithError() throws {
     super.setUp()
+    
   }
   
   override func tearDownWithError() throws {

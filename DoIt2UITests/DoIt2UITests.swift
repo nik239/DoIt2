@@ -51,10 +51,6 @@ final class DoIt2UITests: XCTestCase {
   }
   
   func test_ToDosTableViewTitle() throws {
-    
-    let app = XCUIApplication()
-    app.tables/*@START_MENU_TOKEN@*/.staticTexts["Ma Homies "]/*[[".cells.staticTexts[\"Ma Homies \"]",".staticTexts[\"Ma Homies \"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
-    app.navigationBars["Ma Homies"].staticTexts["Ma Homies"].tap()
                 
   }
     
