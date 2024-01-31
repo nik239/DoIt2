@@ -10,20 +10,18 @@ import XCTest
 
 final class ListsFetchTests: XCTestCase {
   let persistenceManager = PersistenceManager(dataStack: TestCoreDataStack())
-  let mockViewModel = ListsViewModel(tableView: UITableView())
+  let mockViewModel = ListsViewModel()
   var dataSource: ListsViewDataSource!
   var listsFetch: ListsFetch!
   
   override init() {
-    dataSource = mockViewModel.configuredDataSource()
-    listsFetch = ListsFetch(dataSource: dataSource, persistenceManager: persistenceManager)
+    mockViewModel.configureDataSource()
+    listsFetch = ListsFetch(dataSource: mockViewModel.dataSource!, persistenceManager: persistenceManager)
     super.init()
   }
   
   override func setUpWithError() throws {
     super.setUp()
-    dataSource = mockViewModel.configuredDataSource()
-    listsFetch = ListsFetch(dataSource: dataSource, persistenceManager: persistenceManager)
   }
   
   override func tearDownWithError() throws {

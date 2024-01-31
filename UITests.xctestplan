@@ -17,15 +17,6 @@
   },
   "testTargets" : [
     {
-      "enabled" : false,
-      "parallelizable" : true,
-      "target" : {
-        "containerPath" : "container:DoIt2.xcodeproj",
-        "identifier" : "A86125E02B61A54200A00159",
-        "name" : "DoIt2Tests"
-      }
-    },
-    {
       "parallelizable" : true,
       "target" : {
         "containerPath" : "container:DoIt2.xcodeproj",

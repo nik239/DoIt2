@@ -22,6 +22,8 @@ final class NewListViewController: UIViewController {
     view.addSubview(svTitle)
     fldTitle.delegate = self
     setupConstraints()
+    
+    view.accessibilityIdentifier = "NewListViewControllerBackground"
   }
   
   lazy var lblInstructions: InstructionsLabel = {

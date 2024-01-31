@@ -42,6 +42,7 @@
 		A8614F952B27CDA400DCC068 /* ListsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8614F6D2B27CDA300DCC068 /* ListsViewController.swift */; };
 		A8614F972B27CDA400DCC068 /* ToDosViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8614F702B27CDA400DCC068 /* ToDosViewDataSource.swift */; };
 		A8614F982B27CDA400DCC068 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A8614F712B27CDA400DCC068 /* LaunchScreen.storyboard */; };
+		A865BEF02B6AEB26007A49CB /* CustomGestures.swift in Sources */ = {isa = PBXBuildFile; fileRef = A865BEEF2B6AEB26007A49CB /* CustomGestures.swift */; };
 		A86B82B42B48A72900E24353 /* TitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86B82B32B48A72900E24353 /* TitleLabel.swift */; };
 		A86B82B62B48A78F00E24353 /* TitleStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86B82B52B48A78F00E24353 /* TitleStackView.swift */; };
 		A86B82B82B48AAF400E24353 /* TitleField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86B82B72B48AAF400E24353 /* TitleField.swift */; };
@@ -115,6 +116,7 @@
 		A8614F702B27CDA400DCC068 /* ToDosViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToDosViewDataSource.swift; sourceTree = "<group>"; };
 		A8614F712B27CDA400DCC068 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A865BEEE2B6A2C1E007A49CB /* DoIt2-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DoIt2-Bridging-Header.h"; sourceTree = "<group>"; };
+		A865BEEF2B6AEB26007A49CB /* CustomGestures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomGestures.swift; sourceTree = "<group>"; };
 		A86B82B32B48A72900E24353 /* TitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleLabel.swift; sourceTree = "<group>"; };
 		A86B82B52B48A78F00E24353 /* TitleStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleStackView.swift; sourceTree = "<group>"; };
 		A86B82B72B48AAF400E24353 /* TitleField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleField.swift; sourceTree = "<group>"; };
@@ -236,9 +238,9 @@
 			isa = PBXGroup;
 			children = (
 				A86125F02B622CA900A00159 /* TestCoreDataStack.swift */,
+				A8E1FFB62B62D55400D60EA4 /* ListsFetchTests.swift */,
 				A86125E32B61A54200A00159 /* NewToDoViewModelTests.swift */,
 				A8E1FFB42B62D35900D60EA4 /* ToDosViewDataSourceTests.swift */,
-				A8E1FFB62B62D55400D60EA4 /* ListsFetchTests.swift */,
 			);
 			path = DoIt2Tests;
 			sourceTree = "<group>";
@@ -363,6 +365,7 @@
 			children = (
 				A8FB04582B685164005E2851 /* DoIt2UITests.swift */,
 				A8FB045A2B685164005E2851 /* DoIt2UITestsLaunchTests.swift */,
+				A865BEEF2B6AEB26007A49CB /* CustomGestures.swift */,
 			);
 			path = DoIt2UITests;
 			sourceTree = "<group>";
@@ -563,6 +566,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A865BEF02B6AEB26007A49CB /* CustomGestures.swift in Sources */,
 				A8FB04592B685164005E2851 /* DoIt2UITests.swift in Sources */,
 				A8FB045B2B685164005E2851 /* DoIt2UITestsLaunchTests.swift in Sources */,
 			);
@@ -754,8 +758,7 @@
 				INFOPLIST_FILE = DoIt2/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -784,8 +787,7 @@
 				INFOPLIST_FILE = DoIt2/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -807,7 +809,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = YSWM5SJ596;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nikivanov.DoIt2UITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -825,7 +827,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = YSWM5SJ596;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nikivanov.DoIt2UITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
